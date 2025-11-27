@@ -1,0 +1,138 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #00f8b6 0%, #006e93 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+/* CONTENEDOR PRINCIPAL */
+.main-box {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(15px);
+    width: 92%;
+    max-width: 2000px;
+    height: 90vh;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    border-radius: 35px;
+    overflow: hidden;
+    border: 2px solid rgba(255, 255, 255, 0.25);
+
+    box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+}
+
+/* CAJA DEL LOGIN */
+.login-box {
+    background: white;
+    width: 100%;
+    height: 100%;
+
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    box-shadow: inset 0 0 25px rgba(0,0,0,0.05);
+}
+
+.login-box h2 {
+    margin-bottom: 25px;
+    font-size: 32px;
+    font-weight: 600;
+    color: #00394d;
+    letter-spacing: 1px;
+}
+
+/* FORMULARIO */
+.login-box form {
+    width: 100%;
+    max-width: 350px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.login-box input {
+    padding: 15px;
+    border-radius: 12px;
+    border: 1px solid #cfd9e6;
+    background: #eef4ff;
+    font-size: 15px;
+    outline: none;
+    transition: 0.2s ease;
+}
+
+.login-box input:focus {
+    border-color: #0094b8;
+    background: #e9f5ff;
+    box-shadow: 0 0 8px rgba(0,148,184,0.3);
+}
+
+/* BOTÓN */
+.login-box button {
+    padding: 15px;
+    border-radius: 12px;
+    border: none;
+    background: linear-gradient(90deg, #0094b8, #006a84);
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    transition: 0.25s ease;
+    font-weight: 600;
+    letter-spacing: .5px;
+}
+
+.login-box button:hover {
+    transform: translateY(-3px);
+    opacity: 0.9;
+    box-shadow: 0 8px 20px rgba(0,108,132,0.4);
+}
+
+
+.img-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+.login-box form .rol-group {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    margin-bottom: 5px;
+}
+
+
+.login-box form .rol-group input[type="radio"] {
+    display: inline-block;
+    vertical-align: middle;
+    
+}
+/* RESPONSIVE */
+@media (max-width: 950px) {
+    .main-box {
+        grid-template-columns: 1fr;
+        height: auto;
+    }
+
+    .img-box { 
+        display: none; 
+    }
+
+    body {
+        padding: 40px 15px;
+    }
+}

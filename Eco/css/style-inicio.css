@@ -1,0 +1,218 @@
+/* RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #00f8b6 0%, #006e93 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+    overflow-x: hidden;
+    overflow: hidden;
+}
+
+/* HEADER */
+header {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(15px);
+    width: 98%;
+    max-width: 2000px;
+    height: auto;
+    min-height: 60px; 
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 0 0 35px 35px;
+    border: 2px solid rgba(255,255,255,0.4);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    padding: 0.5rem 3rem; 
+    gap: 2rem;
+    position: relative;
+}
+
+
+img {
+    height: 65px; /* Ligeramente más grande */
+    width: 65px;
+    object-fit: cover;
+}
+
+/* BOTÓN SALIR */
+.cerrar-sesion {
+    background: #ff4b5c;
+    border: none;
+    color: white;
+    padding: 10px 35px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+}
+
+.cerrar-sesion:hover {
+    background: #e63946;
+    transform: translateY(-2px); /* Pequeño efecto 3D */
+    box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+}
+
+
+.admin-box {
+    width: 98%;
+    max-width: 2000px;
+    min-height: 70vh;
+    max-height: 80vh;
+
+
+    margin-top: 2rem;   
+    padding: 2rem;
+
+    display: grid;
+    grid-template-columns: 1fr 250px;
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+        "titulo titulo"
+        "contenido sidebar";
+
+    gap: 2rem;
+
+    border-radius: 35px;
+    border: 2px solid rgba(255,255,255,0.4);
+    background: rgba(255,255,255,0.1);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+}
+
+/* TÍTULO */
+.titulo-area {
+    grid-area: titulo;
+    text-align: center;
+    color: white;
+}
+
+.titulo-area h1 {
+    font-size: clamp(1rem, 3vw, 2rem);
+    font-weight: 700;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    letter-spacing: 1px;
+}
+
+/* SIDEBAR (MENÚ DERECHO) */
+.sidebar {
+    grid-area: sidebar;
+    padding-top: 1rem;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar li {
+    margin: 1.5rem 0;
+}
+
+.sidebar a {
+    display: block;
+    padding: 12px 18px;
+    text-decoration: none;
+    text-align: center;
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: white;
+    border: 2px solid white;
+    border-radius: 20px 0 0 20px;
+    transition: all 0.3s ease;
+}
+
+.sidebar a:hover {
+    background: rgba(255,255,255,0.5);
+    color: #006e93;
+    border-color: #006e93;
+    transform: translateX(-5px);
+    box-shadow: -5px 5px 10px rgba(0,0,0,0.15);
+}
+
+
+.content-area {
+    grid-area: contenido;
+   
+}
+
+
+.container {
+    width: 95%;
+    height: clamp(250px, 45vh, 500px);
+    border-radius: 1.5em;
+    overflow: hidden;
+    background: white;
+    display: flex;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+}
+
+.palette {
+    display: flex;
+    width: 100%;
+}
+
+.color {
+    flex: 1;
+    transition: flex 0.4s ease-in-out;
+}
+
+.color:hover {
+    flex: 3;
+}
+
+.color img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+@media (max-width: 1200px) {
+    .admin-box {
+        grid-template-columns: 1fr minmax(150px, 200px); 
+        gap: 2rem;
+    }
+}
+
+/* Vista Celular / Móvil (Ancho menor a 900px) */
+@media (max-width: 900px) {
+    .admin-box {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "titulo"
+            "sidebar"
+            "contenido";
+        padding: 1.5rem; /* Reducimos el padding en móvil */
+    }
+    
+    .sidebar {
+        padding-top: 0;
+    }
+
+    .sidebar a {
+        border-radius: 20px;
+        transform: none !important; /* Aseguramos que no se desplace en móvil */
+        margin-left: 0;
+    }
+    
+    .sidebar a:hover {
+        background: rgba(255,255,255,0.3);
+        color: white;
+        border-color: white;
+        box-shadow: none;
+    }
+
+    .container {
+        height: 200px; /* Un poco menos alto en móvil */
+    }
+}

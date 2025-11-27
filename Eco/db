@@ -1,0 +1,33 @@
+CREATE DATABASE IF NOT EXISTS eco_login_db
+DEFAULT CHARACTER SET utf8mb4
+DEFAULT COLLATE utf8mb4_general_ci;
+
+USE eco_login_db;
+
+CREATE TABLE rol (
+    idRol INT(11) NOT NULL AUTO_INCREMENT,
+    nomRol VARCHAR(50) NOT NULL,
+    descRol VARCHAR(255) NOT NULL,
+    PRIMARY KEY (idRol)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE usuarios (
+    idUsu INT(11) NOT NULL AUTO_INCREMENT,
+    nomUsu VARCHAR(50) NOT NULL,
+    apelUsu VARCHAR(50) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    rol INT(11) NULL,
+    clave VARCHAR(55) NOT NULL,
+    PRIMARY KEY (idUsu),
+    FOREIGN KEY (rol) REFERENCES roles(idRol)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+INSERT INTO rol (nomRol, descRol) VALUES
+('Administrador', 'Control total del sistema'),
+('Editor', 'Puede crear y editar contenido'),
+('Usuario', 'Acceso limitado a funciones básicas');
+
+INSERT INTO usuarios (nomUsu, apelUsu, email, rol, clave) VALUES
+('Carlos', 'Ramírez', 'carlos@example.com', 1, '12345'),
+('María', 'Lopez', 'maria@example.com', 2, 'claveSegura'),
+('Pedro', 'Gomez', 'pedro@example.com', 3, 'password');
