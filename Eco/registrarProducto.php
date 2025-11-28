@@ -22,7 +22,7 @@ if (isset($_POST["regresarbtn"])) {
         <img src="imagenes/logo.png" alt="Logo de la Aplicación" style="border-radius: 50%;">
         
         <form action="" method="POST" style="position: absolute; right: 30px; top: 30px; margin: 0;">
-            <button type="submit" name="regresar" class="regresarbtn">
+            <button type="submit" name="regresarbtn" class="regresarbtn">
                 Regresar
             </button>
         </form>
@@ -43,7 +43,7 @@ if (isset($_POST["regresarbtn"])) {
                 <input type="text" name="desPro" placeholder="Descripción del producto">
                 <input type="number" step="0.01" name="preUni" placeholder="Precio unitario">
                 <input type="number" name="stoAct" placeholder="Cantidad en stock">
-                <select name="catPro" >
+                <select name="idCatFK" >
                     <option value="">Seleccione una categoría</option>
                     <option value="1">Tecnología</option>
                     <option value="2">Ropa</option>

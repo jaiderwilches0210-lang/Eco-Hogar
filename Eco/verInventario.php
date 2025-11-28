@@ -50,7 +50,7 @@ if (isset($_POST["regresarbtn"])) {
             <td><?php echo $fila['desPro']; ?></td>
             <td>$<?php echo number_format($fila['preUni'], 2); ?></td>
             <td><?php echo $fila['stoAct']; ?></td>
-            <td><?php echo $fila['nombreCat']; ?></td>
+            <td><?php echo $fila['nomCat']; ?></td>
         </tr>
     <?php } ?>
 </table>
