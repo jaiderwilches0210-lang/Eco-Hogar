@@ -18,12 +18,11 @@ include("controlador/controlador_db.php");
 
     <form action="" method="POST">
         <div class="rol-group">
-            <input type="radio" name="rol" value="admin">Admin
-            <input type="radio" name="rol" value="usuario">Usuario
+            <input type="radio" name="idRolFK" value="admin">Admin
+            <input type="radio" name="idRolFK" value="usuario">Usuario
         </div>
         <input type="text" name="nomUsu" placeholder="Nombre">
-        <input type="text" name="apeUsu" placeholder="Apellido">
-        <input type="email" name="email" placeholder="Correo Electrónico">
+        <input type="email" name="email_Usu" placeholder="Correo Electrónico">
         <input type="password" name="clave" placeholder="Contraseña">
         <button type="submit" name="btnCrearCuenta">Crear Cuenta</button>
         <button type="submit" name="btnRegresar">Regresar</button>

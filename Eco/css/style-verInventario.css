@@ -102,3 +102,47 @@ table {
     overflow: hidden;
     box-shadow: 0 8px 16px rgba(0,0,0,0.2);
 }
+
+/* CONTENEDOR DE PAGINACIÓN */
+.pagination {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 25px;
+    padding: 10px 20px;
+    background: rgba(255,255,255,0.3);
+    border-radius: 20px;
+    box-shadow: 0 6px 14px rgba(0,0,0,0.25);
+}
+
+/* BOTONES */
+.pagination a,
+.pagination span {
+    padding: 8px 14px;
+    border-radius: 10px;
+    font-size: 17px;
+    font-weight: 600;
+    text-decoration: none;
+    color: #0a2a5a;
+    border: 2px solid #0a2a5a;
+    transition: 0.25s;
+}
+
+/* Hover */
+.pagination a:hover {
+    background: #0a2a5a;
+    color: white;
+}
+
+/* Página actual */
+.pagination .active {
+    background: #ff8c22;
+    color: white !important;
+    border-color: #ff8c22;
+}
+
+/* Deshabilitado */
+.pagination .disabled {
+    opacity: 0.4;
+    pointer-events: none;
+}

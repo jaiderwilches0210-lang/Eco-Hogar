@@ -3,21 +3,20 @@
 // LOGIN
 if (isset($_POST["btnIngresar"])) {
 
-    if (empty($_POST["nomUsu"]) || empty($_POST["apelUsu"]) || empty($_POST["email"]) || empty($_POST["clave"]) || empty($_POST["rol"])) {
+    if (empty($_POST["nomUsu"]) || empty($_POST["email_Usu"]) || empty($_POST["clave"]) || empty($_POST["idRolFK"])) {
 
         echo "<script>alert('Los campos son obligatorios');</script>";
 
     } else {
 
-        $nombre = $_POST["nomUsu"];
-        $apellido = $_POST["apelUsu"];
-        $email = $_POST["email"];
+        $usuario = $_POST["nomUsu"];
+        $email = $_POST["email_Usu"];
         $clave = $_POST["clave"];
 
         // Convertir texto a FK numérica
-        $rol = ($_POST["rol"] == "admin") ? 1 : 2;
+        $rol = ($_POST["idRolFK"] == "admin") ? 1 : 2;
 
-        $sql = $conexion->query("SELECT * FROM usuarios WHERE nomUsu='$nombre' AND apelUsu='$apellido' AND email='$email' AND clave='$clave' AND rol='$rol'");
+        $sql = $conexion->query("SELECT * FROM usuarios WHERE nomUsu='$usuario' AND  email_Usu='$email' AND clave='$clave' AND idRolFK='$rol'");
 
         if ($datos = $sql->fetch_object()) {
             header("Location: inicio.php");
@@ -32,19 +31,20 @@ if (isset($_POST["btnIngresar"])) {
 // REGISTRO DE USUARIO
 if (isset($_POST["btnCrearCuenta"])) {
 
-    if (empty($_POST["nomUsu"]) || empty($_POST["apelUsu"]) || empty($_POST["email"]) || empty($_POST["clave"]) || empty($_POST["rol"])) {
+    if (empty($_POST["nomUsu"]) || empty($_POST["email_Usu"]) || empty($_POST["clave"]) || empty($_POST["idRolFK"])) {
 
         echo "<script>alert('Todos los campos son obligatorios');</script>";
 
     } else {
 
-        $nombre = $_POST["nomUsu"];
-        $apellido = $_POST["apelUsu"];
-        $email = $_POST["email"];
+        
+        $usuario = $_POST["nomUsu"];
+        $email = $_POST["email_Usu"];
         $clave = $_POST["clave"];
-        $rol = ($_POST["rol"] == "admin") ? 1 : 2;
 
-        $sql = $conexion->query("INSERT INTO usuarios (nomUsu, apelUsu, email, clave, rol) VALUES ('$nombre', '$apellido', '$email', '$clave', '$rol')");
+        $rol = ($_POST["idRolFK"] == "admin") ? 1 : 2;
+
+        $sql = $conexion->query("INSERT INTO usuarios (nomUsu, email_Usu, clave, idRolFK) VALUES ('$usuario', '$email', '$clave', '$rol')");
 
         echo "<script>alert('Cuenta creada exitosamente');</script>";
         header("Location: login.php");

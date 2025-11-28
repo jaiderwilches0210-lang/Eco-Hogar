@@ -50,10 +50,44 @@ if (isset($_POST["regresarbtn"])) {
             <td><?php echo $fila['desPro']; ?></td>
             <td>$<?php echo number_format($fila['preUni'], 2); ?></td>
             <td><?php echo $fila['stoAct']; ?></td>
-            <td><?php echo $fila['nombreCat']; ?></td>
+            <td><?php echo $fila['nomCat']; ?></td>
         </tr>
     <?php } ?>
 </table>
+
+
+<div class="pagination">
+
+    <!-- Botón ANTERIOR -->
+    <?php if ($pagina > 1): ?>
+        <a href="?pag=<?php echo $pagina - 1; ?>">&#10094;</a>
+    <?php else: ?>
+        <span class="disabled">&#10094;</span>
+    <?php endif; ?>
+
+
+    <!-- Números -->
+    <?php for ($i = 1; $i <= $totalPaginas; $i++): ?>
+
+        <?php if ($i == $pagina): ?>
+            <span class="active"><?php echo $i; ?></span>
+        <?php else: ?>
+            <a href="?pag=<?php echo $i; ?>"><?php echo $i; ?></a>
+        <?php endif; ?>
+
+    <?php endfor; ?>
+
+
+    <!-- Botón SIGUIENTE -->
+    <?php if ($pagina < $totalPaginas): ?>
+        <a href="?pag=<?php echo $pagina + 1; ?>">&#10095;</a>
+    <?php else: ?>
+        <span class="disabled">&#10095;</span>
+    <?php endif; ?>
+
+</div>
+
+
 
         
         

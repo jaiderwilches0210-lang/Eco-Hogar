@@ -22,13 +22,12 @@ include("controlador/controlador_db.php");
 
     <form action="" method="POST">
         <div class="rol-group">
-            <input type="radio" name="rol" value="admin">Admin
-            <input type="radio" name="rol" value="usuario">Usuario
+            <input type="radio" name="idRolFK" value="admin">Admin
+            <input type="radio" name="idRolFK" value="usuario">Usuario
         </div>
         
-        <input type="text" name="nomUsu" placeholder="nombre">
-        <input type="text" name="apelUsu" placeholder="Apellido">
-        <input type="email" name="email" placeholder="Correo Electrónico">
+        <input type="text" name="nomUsu" placeholder="Usuario">
+        <input type="email" name="email_Usu" placeholder="Correo Electrónico">
         <input type="password" name="clave" placeholder="Contraseña">
         <button type="submit" name="btnIngresar">Ingresar</button>
 
