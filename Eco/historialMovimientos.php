@@ -1,0 +1,146 @@
+<?php
+include("logica/logica-historial.php");
+
+?>
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historial de Movimientos</title>
+    <style>
+        @import url('css/style-verInventario.css');
+        @import url('css/style-historial.css');
+    </style>
+</head>
+
+<body>
+    <header class="main-header">
+        <img src="imagenes/logo.png" alt="Logo de la Aplicación" style="border-radius: 50%;">
+            <ul class="nav-menu">
+                <li><a href="inicio.php">INICIO</a></li>
+                <li><a href="registrarProducto.php">REGISTRAR</a></li>
+                <li><a href="verInventario.php">INVENTARIO</a></li>
+                <li><a href="historialMovimientos.php" style="color: #2200fcff;">HISTORIAL</a></li>
+                <li><a href="generarReportes.php">REPORTES</a></li>
+                <li style="margin-left: auto;"><a href="#">+</a></li>
+            </ul>
+        <a href="inicio.php" class="regresarbtn">Cerrar Sesión</a>
+    </header>
+    
+
+
+    <div class="admin-box">
+        <h2>Historial de Movimientos</h2>
+        
+        <div class="historial-filters">
+            <div class="filter-group">
+                <label for="admin_name">Filtrar por Nombre Administrador:</label>
+                <input type="text" id="admin_name" name="admin_name" placeholder="Nombre Admin">
+            </div>
+
+            <div class="filter-group">
+                <label for="tipo_mov">Filtrar por Tipo:</label>
+                <select id="tipo_mov" name="tipo_mov">
+                    <option value="">Todos</option>
+                    <option value="1">Ingreso</option>
+                    <option value="2">Egreso</option>
+                    <option value="3">Actualización</option>
+                    <option value="4">Eliminación</option>
+                </select>
+            </div>
+            
+            <div class="filter-group">
+                <label for="filter_date">Filtrar por Fecha:</label>
+                <input type="date" id="filter_date" name="filter_date">
+            </div>
+            
+            <button type="button" class="btn-filter" style="padding: 5px 10px; background-color: #4CAF50; color: white; border: none; border-radius: 3px; cursor: pointer;">
+                Filtrar
+            </button>
+        </div>
+        
+        
+        <table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%;">
+            <tr style="background-color: #4CAF50; color: white; text-align: left;">
+                <th>ID M.</th>
+                <th>Producto</th>
+                <th>Tipo</th>
+                <th>Fecha</th>
+                <th>Usuario</th>
+                <th>Cantidad</th>
+                <th>Detalle</th>
+            </tr>
+
+            <?php 
+            if (isset($sqlHistorial) && $sqlHistorial->num_rows > 0) {
+                while ($fila = $sqlHistorial->fetch_assoc()) { 
+            ?>
+                <tr>
+                    <td><?php echo $fila['idMov']; ?></td> 
+                    <td><?php echo $fila['nomPro'] ?? 'N/A'; ?></td> 
+                    <td><?php echo getTipoMovimiento($fila['tipMo']); ?></td> 
+                    <td><?php echo $fila['fecMov']; ?></td> 
+                    <td><?php echo $fila['nomUsu'] ?? 'N/A'; ?></td> 
+                    <td><?php echo $fila['cantSto']; ?></td> 
+                    <td><?php echo $fila['razEgre']; ?></td> 
+                </tr>
+            <?php 
+                }
+            } else { 
+            ?>
+                <tr>
+                    <td colspan="7" style="text-align: center;">No se encontraron movimientos en el historial.</td>
+                </tr>
+            <?php 
+            } 
+            ?>
+        </table>
+
+        <div class="pagination">
+            <?php if (isset($pagina) && $pagina > 1): ?>
+                <a href="?pag=<?php echo $pagina - 1; ?>">&#10094;</a>
+            <?php else: ?>
+                <span class="disabled">&#10094;</span>
+            <?php endif; ?>
+
+            <?php 
+            if (isset($totalPaginas)) {
+                for ($i = 1; $i <= $totalPaginas; $i++): 
+            ?>
+                <?php if ($i == $pagina): ?>
+                    <span class="active"><?php echo $i; ?></span>
+                <?php else: ?>
+                    <a href="?pag=<?php echo $i; ?>"><?php echo $i; ?></a>
+                <?php endif; ?>
+            <?php 
+                endfor;
+            } 
+            ?>
+
+            <?php if (isset($pagina, $totalPaginas) && $pagina < $totalPaginas): ?>
+                <a href="?pag=<?php echo $pagina + 1; ?>">&#10095;</a>
+            <?php else: ?>
+                <span class="disabled">&#10095;</span>
+            <?php endif; ?>
+        </div>
+        
+        <div class="export-buttons">
+            <button type="button" onclick="exportarHistorial('excel')" style="background-color: #337ab7; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer;">
+                Exportar en Excel
+            </button>
+            <button type="button" onclick="window.print()" style="background-color: #f0ad4e; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer;">
+                Imprimir Reporte
+            </button>
+        </div>
+        
+    </div>
+
+    <script>
+        function exportarHistorial(formato) {
+            window.location.href = `exportar_historial.php?formato=${formato}`;
+        }
+    </script>
+</body>
+</html>

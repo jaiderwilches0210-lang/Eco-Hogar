@@ -2,17 +2,10 @@ SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
 
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
--- 1. CREACIÓN Y SELECCIÓN DE LA BASE DE DATOS
 CREATE DATABASE IF NOT EXISTS eco_hogar DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 USE eco_hogar;
 
--- Estructura de tabla para la tabla `rol`
+
 CREATE TABLE IF NOT EXISTS `rol` (
   `idRol` int(1) NOT NULL AUTO_INCREMENT,
   `nomRol` varchar(50) NOT NULL,
@@ -20,46 +13,48 @@ CREATE TABLE IF NOT EXISTS `rol` (
   PRIMARY KEY (`idRol`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Estructura de tabla para la tabla `usuarios`
+
 CREATE TABLE IF NOT EXISTS `usuarios` (
   `idUsu` int(11) NOT NULL AUTO_INCREMENT,
   `nomUsu` varchar(50) NOT NULL,
   `email_Usu` varchar(50) NOT NULL,
   `idRolFK` int(11) NOT NULL,
+  `clave` varchar(50) NOT NULL,
   PRIMARY KEY (`idUsu`),
   KEY `relacionRolUsuario_fk` (`idRolFK`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 
--- Estructura de tabla para la tabla `categoria_producto`
+
 CREATE TABLE IF NOT EXISTS `categoria_producto` (
   `idCat` int(11) NOT NULL AUTO_INCREMENT,
   `nomCat` varchar(100) NOT NULL,
   PRIMARY KEY (`idCat`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Estructura de tabla para la tabla `productos`
+
 CREATE TABLE IF NOT EXISTS `productos` (
   `idPro` int(11) NOT NULL AUTO_INCREMENT,
   `idCatFK` int(11) NOT NULL,
+  `nomPro` varchar(100) NOT NULL,
   `desPro` text NOT NULL,
   `preUni` decimal(10,0) NOT NULL,
-  `preVen` decimal(10,0) NOT NULL,
+  `preVen` decimal(10,0),
   `FecReg` date NOT NULL,
   `stoAct` int(11) NOT NULL,
-  `umbMinSo` int(11) NOT NULL,
-  `idEstProEnumFK` int(11) NOT NULL,
+  `umbMinSo` int(11) L,
+  `idEstProEnumFK` int(11) ,
   PRIMARY KEY (`idPro`),
   KEY `produ_fk` (`idCatFK`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Estructura de tabla para la tabla `articuloinventariable`
+
 CREATE TABLE IF NOT EXISTS `articuloinventariable` (
   `nomPro` varchar(100) NOT NULL,
   `fecReg` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Estructura de tabla para la tabla `movimientos`
+
 CREATE TABLE IF NOT EXISTS `movimientos` (
   `idMov` int(11) NOT NULL AUTO_INCREMENT,
   `idUsuFK` int(11) NOT NULL,
@@ -73,7 +68,7 @@ CREATE TABLE IF NOT EXISTS `movimientos` (
   KEY `movi_fk` (`idProFK`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Estructura de tabla para la tabla `auditoria_operaciones`
+
 CREATE TABLE IF NOT EXISTS `auditoria_operaciones` (
   `idReg` int(11) NOT NULL AUTO_INCREMENT,
   `idUsuFK` int(11) NOT NULL,
@@ -85,7 +80,7 @@ CREATE TABLE IF NOT EXISTS `auditoria_operaciones` (
   KEY `audiConMov_fk` (`idMovFK`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Estructura de tabla para la tabla `configuracion_reporte`
+
 CREATE TABLE IF NOT EXISTS `configuracion_reporte` (
   `idRepor` int(11) NOT NULL AUTO_INCREMENT,
   `idUsuFK` int(11) NOT NULL,
@@ -97,7 +92,7 @@ CREATE TABLE IF NOT EXISTS `configuracion_reporte` (
   KEY `configuracion_reporte_fk` (`idProFK`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Estructura de tabla para la tabla `inventario`
+
 CREATE TABLE IF NOT EXISTS `inventario` (
   `idInv` int(11) NOT NULL AUTO_INCREMENT,
   `idProFK` int(11) NOT NULL,
@@ -109,7 +104,7 @@ CREATE TABLE IF NOT EXISTS `inventario` (
   KEY `inventario_fk` (`idProFK`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- 4. RESTRICCIONES (FOREIGN KEYS)
+
 ALTER TABLE `usuarios`
   ADD CONSTRAINT `relacionRolUsuario_fk` FOREIGN KEY (`idRolFK`) REFERENCES `rol` (`idRol`);
 

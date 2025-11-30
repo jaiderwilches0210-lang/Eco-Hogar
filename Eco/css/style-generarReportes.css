@@ -1,0 +1,183 @@
+
+        /* RESET */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #00f8b6 0%, #006e93 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1rem;
+            overflow: auto;
+        }
+
+        /* HEADER */
+        header {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(15px);
+            width: 98%;
+            max-width: 2000px;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-radius: 0 0 35px 35px;
+            border: 2px solid rgba(255,255,255,0.4);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+            padding: 0.5rem 3rem;
+            gap: 2rem;
+        }
+
+        header img {
+            height: 65px;
+            width: 65px;
+            object-fit: cover;
+        }
+
+        /* BOTÓN SALIR */
+        .regresarbtn {
+            background: #ff4b5c;
+            border: none;
+            color: white;
+            padding: 10px 35px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+        }
+        .regresarbtn:hover {
+            background: #e63946;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+        }
+
+        .admin-box {
+            width: 98%;
+            max-width: 2000px;     /* Igual que el header */
+            min-height: 80vh;
+            margin-top: 2rem;
+            padding: 2rem;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            padding-bottom: 40px;
+            align-items: center;
+
+            border-radius: 35px;
+            border: 2px solid rgba(255,255,255,0.4);
+            background: rgba(255,255,255,0.1);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+        }
+
+        .admin-box {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        .report-container {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .data-table-section {
+            flex: 5;
+            min-width: 800px;
+        }
+
+        /* PANEL DE FILTROS */
+        .filters-panel {
+            display: flex;
+            justify-content: flex-start;
+            align-items: flex-end;
+            flex-wrap: wrap;             /* 🔥 Hace que los filtros se bajen si no caben */
+            gap: 25px;
+            background: rgba(255, 255, 255, 0.18);
+            backdrop-filter: blur(18px) ;
+            padding: 20px 25px;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+
+            width: 100%;
+            max-width: 1800px;
+            margin: 20px auto;
+        }
+
+        /* EL FORMULARIO TAMBIÉN DEBE SER HORIZONTAL */
+        .filters-panel form {
+            display: flex;
+            flex-direction: row;          /* 🔥 En fila si hay espacio */
+            flex-wrap: wrap;              /* 🔥 Si se desborda, baja */
+            gap: 25px;
+            width: 100%;
+        }
+
+        /* CADA GRUPO (label + input/select) */
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            min-width: 220px;
+            flex: 1 1 220px;
+        }
+
+        /* ESTILO DE CAMPOS */
+        .filter-group label {
+            font-weight: bold;
+            margin-bottom: 6px;
+        }
+
+        .filter-group input,
+        .filter-group select {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        /* BOTÓN GENERAR */
+        .filters-panel button {
+            align-self: flex-end;
+            height: 42px;
+            padding: 0 25px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-top: 1px solid #ddd;
+            margin-top: 20px;
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            padding: 10px;
+            background-color: #eee;
+            margin: 0;
+            border-bottom: 2px solid #4CAF50;
+        }
+        .nav-menu li a {
+            padding: 10px 15px;
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+        }
+        .nav-menu li a:hover {
+            background-color: #ddd;
+        }
+        
