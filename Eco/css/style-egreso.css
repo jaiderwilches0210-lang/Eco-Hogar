@@ -273,15 +273,12 @@ body {
     border: 1px solid #cfd9e6;
     border-radius: 10px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-    overflow-x: hidden;
 }
 
 .results-table {
     width: 100%;
     border-collapse: collapse;
     font-size: 14px;
-    overflow-x: hidden;
- 
 }
 
 .results-table thead {
