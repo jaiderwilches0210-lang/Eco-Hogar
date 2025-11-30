@@ -102,15 +102,7 @@ if (isset($_POST['enviar_egreso'])) {
                             ". Stock Actual: " . $nuevo_stock . 
                             ". Unidades egresadas: " . $cantidad_egresar . ".";
             
-            /* * ⚠️ POSIBLE CAUSA DE ERROR DE INSERCIÓN: 
-             * El campo `razEgre` en la tabla `movimientos` podría ser `VARCHAR` 
-             * con una longitud muy pequeña (ej. VARCHAR(50)), lo que causa 
-             * un fallo al intentar insertar la cadena larga generada arriba.
-             * * SOLUCIÓN: Asegúrese de que `razEgre` sea de tipo `TEXT` en la base de datos.
-             * * Además, si `fecMov` es de tipo `DATE`, pero se envía un `DATETIME` 
-             * (`Y-m-d H:i:s`), esto puede causar problemas. Si es `DATE`, 
-             * cambie `$fecha_actual = date('Y-m-d');`
-            */
+            
         
             $sql_movimiento = "INSERT INTO movimientos (idUsuFK, idProFK, tipMo, cantSto, fecMov, razEgre) VALUES (?, ?, ?, ?, ?, ?)";
             $stmt_mov = $conexion->prepare($sql_movimiento);
