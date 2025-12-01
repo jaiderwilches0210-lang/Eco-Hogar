@@ -30,14 +30,19 @@ include("logica/logicaInicio.php");
         <nav class="sidebar">
             <ul>
                 <li><a 
-                    href="verInventario.php" 
+                    href="verInventario.php"
                     class="button-a"
                 >Ver Inventario</a></li>
                 
                 <li><a
-                    href="registrarProducto.php" 
+                    href="registrarProducto.php"
                     class="button-a"
                 >Registrar Producto</a></li>
+
+                <li><a
+                    href="eliminarProducto.php" 
+                    class="button-a"
+                >Eliminar Producto</a></li>
                 
                 <li><a 
                     href="registrarIngreso.php" 

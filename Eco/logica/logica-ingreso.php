@@ -35,107 +35,102 @@ if (isset($_POST['enviar_ingreso'])) {
         $stock_anterior = 0;
         $nombre_producto = '';
         
-        // RECUPERAR EL ID DEL USUARIO DE LA SESIÓN
-        $idUsuFK = isset($_SESSION['idUsu']) ? (int)$_SESSION['idUsu'] : 2; 
+        // CORRECCIÓN PREVIA: Se usa 1 como valor de respaldo (asumiendo que ID 1 existe)
+        $idUsuFK = isset($_SESSION['idUsu']) ? (int)$_SESSION['idUsu'] : 1; 
         
         $nombre_usuario = 'Usuario ID: ' . $idUsuFK; 
-
+        
         try {
-            $sql_stock_actual = "SELECT stoAct, desPro FROM productos WHERE idPro = ?"; 
-            $stmt_stock = $conexion->prepare($sql_stock_actual);
-            $stmt_stock->bind_param("i", $idPro);
-            $stmt_stock->execute();
-            $res_stock = $stmt_stock->get_result();
-            
-            if ($res_stock->num_rows === 0) {
-                 throw new Exception("El producto seleccionado no existe.");
-            }
-            
-            $producto = $res_stock->fetch_assoc();
-            $stock_anterior = $producto['stoAct']; 
-            $nombre_producto = $producto['desPro']; 
-            $stmt_stock->close();
-            
-            $sql_usuario = "SELECT nomUsu FROM usuarios WHERE idUsu = ?";
-            if ($stmt_user = $conexion->prepare($sql_usuario)) {
-                $stmt_user->bind_param("i", $idUsuFK);
-                $stmt_user->execute();
-                $res_user = $stmt_user->get_result();
-                if ($user_data = $res_user->fetch_assoc()) {
-                    $nombre_usuario = $user_data['nomUsu'];
+            // 1. Obtener Stock Actual y Nombre
+            $sql_stock = "SELECT stoAct, desPro FROM productos WHERE idPro = ?";
+            if ($stmt_stock = $conexion->prepare($sql_stock)) {
+                $stmt_stock->bind_param("i", $idPro);
+                $stmt_stock->execute();
+                $res_stock = $stmt_stock->get_result();
+                
+                if ($fila = $res_stock->fetch_assoc()) {
+                    $stock_anterior = $fila['stoAct'];
+                    $nombre_producto = $fila['desPro'];
+                } else {
+                    throw new Exception("Error: Producto no encontrado.");
                 }
-                $stmt_user->close();
+                $stmt_stock->close();
+            } else {
+                throw new Exception("Error al preparar la consulta de stock: " . $conexion->error);
             }
             
-            $nuevo_stock = $stock_anterior + $cantidad_ingresar; 
+            // 2. Calcular nuevo stock
+            $stock_nuevo = $stock_anterior + $cantidad_ingresar;
             
+            // 3. Registrar Movimiento (Tipo 1: Ingreso)
+            $razIngre = "Ingreso de stock. Antes: {$stock_anterior} | Después: {$stock_nuevo}";
+            
+            // CORRECCIÓN CRÍTICA: Se cambia razIngre por razEgre en la consulta SQL
+            $sql_mov = "INSERT INTO movimientos (idProFK, idUsuFK, tipMo, fecMov, cantSto, razEgre) VALUES (?, ?, ?, ?, ?, ?)";
+            
+            if ($stmt_mov = $conexion->prepare($sql_mov)) {
+                $tipo_movimiento = 1; // 1 = Ingreso
+                $stmt_mov->bind_param("iisiss", $idPro, $idUsuFK, $tipo_movimiento, $fecha_actual, $cantidad_ingresar, $razIngre);
+                
+                if (!$stmt_mov->execute()) {
+                    throw new Exception("Error al registrar el movimiento: " . $stmt_mov->error);
+                }
+                $stmt_mov->close();
+            } else {
+                throw new Exception("Error al preparar la consulta de movimiento: " . $conexion->error);
+            }
+            
+            // 4. Actualizar Stock en productos
             $sql_update = "UPDATE productos SET stoAct = ? WHERE idPro = ?";
-            $stmt_update = $conexion->prepare($sql_update);
-            $stmt_update->bind_param("ii", $nuevo_stock, $idPro);
-            
-            if (!$stmt_update->execute()) {
-                throw new Exception("Fallo al actualizar el stock: " . $stmt_update->error);
+            if ($stmt_update = $conexion->prepare($sql_update)) {
+                $stmt_update->bind_param("ii", $stock_nuevo, $idPro);
+                
+                if (!$stmt_update->execute()) {
+                    throw new Exception("Error al actualizar el stock: " . $stmt_update->error);
+                }
+                $stmt_update->close();
+            } else {
+                throw new Exception("Error al preparar la consulta de actualización: " . $conexion->error);
             }
-            $stmt_update->close();
-
-            $tipo_movimiento = 1; 
             
-            $razon_egreso = "Movimiento por INGRESO. Producto: " . htmlspecialchars($nombre_producto) . 
-                            ". Operador: " . htmlspecialchars($nombre_usuario) . 
-                            ". Stock Anterior: " . $stock_anterior . 
-                            ". Stock Actual: " . $nuevo_stock . 
-                            ". Unidades ingresadas: " . $cantidad_ingresar . ".";
-            
-            $sql_movimiento = "INSERT INTO movimientos (idUsuFK, idProFK, tipMo, cantSto, fecMov, razEgre) VALUES (?, ?, ?, ?, ?, ?)";
-            $stmt_mov = $conexion->prepare($sql_movimiento);
-            
-            $stmt_mov->bind_param("iiisis", $idUsuFK, $idPro, $tipo_movimiento, $cantidad_ingresar, $fecha_actual, $razon_egreso);
-
-            if (!$stmt_mov->execute()) {
-                throw new Exception("Fallo al registrar el movimiento: " . $stmt_mov->error);
-            }
-            $stmt_mov->close();
-            
+            // 5. Commit y mensaje de éxito
             $conexion->commit();
-            
-            $mensaje_resultado = " Stock del producto " . htmlspecialchars($nombre_producto) . " actualizado correctamente." . 
-                                 "<br><h4>>Nuevo Stock:</h4>" . $nuevo_stock . " unidades." . 
-                                 "<br><br>El movimiento ha sido registrado.<h5>";
-            $tipo_mensaje = "success";
-
-            header("Location: registrarIngreso.php?msg=" . urlencode($mensaje_resultado) . "&tipo=" . urlencode($tipo_mensaje));
-            exit(); 
+            $mensaje_resultado = "Éxito: Se ingresaron {$cantidad_ingresar} unidades de '{$nombre_producto}'. Stock Actual: {$stock_nuevo}.";
+            $tipo_mensaje = "exito";
             
         } catch (Exception $e) {
             $conexion->rollback();
-            $mensaje_resultado = "Error en la transacción: " . $e->getMessage();
+            $mensaje_resultado = "Fallo en la transacción: " . $e->getMessage();
             $tipo_mensaje = "error";
-            
         }
     }
 }
 
 
-if (isset($_POST['seleccionar_producto']) && isset($_POST['id_producto'])) {
-    
-    $idPro = filter_input(INPUT_POST, 'id_producto', FILTER_VALIDATE_INT);
+// LÓGICA DE BÚSQUEDA Y SELECCIÓN
 
-    if ($idPro !== false) {
-        $sql = "SELECT p.idPro, p.desPro, p.preUni, p.stoAct, c.nomCat
-                FROM productos p 
-                JOIN categoria_producto c ON p.idCatFK = c.idCat 
-                WHERE p.idPro = ?";
+if (isset($_POST['seleccionar_producto'])) {
+    $idPro = filter_input(INPUT_POST, 'id_producto', FILTER_VALIDATE_INT);
+    
+    if ($idPro !== false && $idPro > 0) {
+        $sql_select = "SELECT p.idPro, p.desPro, p.stoAct, c.nomCat, p.nomPro 
+                       FROM productos p 
+                       JOIN categoria_producto c ON p.idCatFK = c.idCat 
+                       WHERE p.idPro = ?";
         
-        $stmt = $conexion->prepare($sql);
-        
-        if ($stmt && $stmt->bind_param("i", $idPro) && $stmt->execute()) {
-            $resultado = $stmt->get_result();
-            if ($resultado->num_rows > 0) {
-                $producto_seleccionado = $resultado->fetch_assoc(); 
-                $producto_seleccionado['nomPro'] = $producto_seleccionado['desPro'];
-                $producto_seleccionado['desPro'] = $producto_seleccionado['desPro']; 
+        if ($stmt = $conexion->prepare($sql_select)) {
+            $stmt->bind_param("i", $idPro);
+            
+            if ($stmt->execute()) {
+                $resultado = $stmt->get_result();
+                if ($resultado->num_rows > 0) {
+                    $producto_seleccionado = $resultado->fetch_assoc(); 
+                    // Se asegura que ambos campos existan para evitar warnings en el formulario de ingreso
+                    $producto_seleccionado['nomPro'] = $producto_seleccionado['nomPro'] ?? $producto_seleccionado['desPro'];
+                    $producto_seleccionado['desPro'] = $producto_seleccionado['desPro']; 
+                }
+                $stmt->close();
             }
-            $stmt->close();
         }
     }
 }
@@ -144,7 +139,8 @@ if (isset($_POST['seleccionar_producto']) && isset($_POST['id_producto'])) {
 $consulta_busqueda = $_POST['consulta_busqueda'] ?? '';
 $id_categoria = filter_input(INPUT_POST, 'id_categoria', FILTER_VALIDATE_INT) ?? 0;
 
-$sql_filtro = "SELECT p.idPro, p.desPro, p.stoAct, c.nomCat
+// CORRECCIÓN ADVERTENCIA: Se añade p.nomPro al SELECT para que esté disponible en el HTML
+$sql_filtro = "SELECT p.idPro, p.nomPro, p.desPro, p.stoAct, c.nomCat
                 FROM productos p 
                 JOIN categoria_producto c ON p.idCatFK = c.idCat 
                 WHERE 1=1"; 
@@ -169,20 +165,24 @@ $sql_filtro .= " ORDER BY p.desPro LIMIT 50";
 
 if ($stmt_filtro = $conexion->prepare($sql_filtro)) {
     if (!empty($parametros)) {
-        $stmt_filtro->bind_param($tipos, ...$parametros);
+        // Enlazar parámetros dinámicamente
+        $refs = [];
+        foreach ($parametros as $key => $value) {
+            $refs[$key] = &$parametros[$key];
+        }
+        call_user_func_array([$stmt_filtro, 'bind_param'], array_merge([$tipos], $refs));
     }
     
-    if ($stmt_filtro->execute()) {
-        $res_productos = $stmt_filtro->get_result();
-        while ($prod = $res_productos->fetch_assoc()) {
-            $prod['nomPro'] = $prod['desPro']; 
-            $productos_encontrados[] = $prod;
-        }
+    $stmt_filtro->execute();
+    $resultado = $stmt_filtro->get_result();
+    
+    while ($fila = $resultado->fetch_assoc()) {
+        $productos_encontrados[] = $fila;
     }
     $stmt_filtro->close();
 }
 
-if ($conexion && $conexion->ping()) {
-    $conexion->close();
+// Para que el formulario de ingreso no se muestre después de un éxito o error 
+if ($tipo_mensaje === 'exito' || $tipo_mensaje === 'error') {
+    $producto_seleccionado = null;
 }
-?>

@@ -16,10 +16,10 @@ $prev_categoria = $_POST['id_categoria'] ?? '';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro de Egreso/Salida | Admin</title>
-    <style>
-        @import url('css/style-admin.css');
-    </style>
+    
+    <link rel="stylesheet" href="css/style-admin.css"> 
     <link rel="stylesheet" href="css/style-egreso.css"> 
+
 </head>
 <body>
     
@@ -47,8 +47,8 @@ $prev_categoria = $_POST['id_categoria'] ?? '';
         <div class="registro-box <?php echo ($producto_seleccionado === null) ? 'wide' : ''; ?>"> 
 
             <?php if (!empty($mensaje)): ?>
-                <div class="resultado-server <?php echo $tipo; ?>">
-                    <?php echo $mensaje; ?>
+                <div class="resultado-server <?php echo htmlspecialchars($tipo); ?>">
+                    <?php echo htmlspecialchars($mensaje); ?>
                 </div>
             <?php endif; ?>
             
@@ -58,45 +58,51 @@ $prev_categoria = $_POST['id_categoria'] ?? '';
             ?>
                 
                 <div class="contenedor-formulario-stock"> 
-                    <h4 class="titulo-resumen-stock">
-                         
-                         <h3 class="info-title">Detalles del Producto Y Stock Actual: <span class="valor-stock-actual" style="color: #ffffffff;"><?php echo $producto_seleccionado['stoAct']; ?> unidades</span></h4></h3>
+                    <h3 class="info-title">Detalles del Producto y Stock Actual: 
+                        <span class="valor-stock-actual" style="color: #ffffffff;"><?php echo htmlspecialchars($producto_seleccionado['stoAct'] ?? '0'); ?> unidades</span>
+                    </h3>
                     
                     <form action="registrarEgreso.php" method="POST" class="formulario-ingreso-stock">
                         
-                        <input type="hidden" name="id_producto" value="<?php echo $producto_seleccionado['idPro']; ?>">
+                        <input type="hidden" name="id_producto" value="<?php echo htmlspecialchars($producto_seleccionado['idPro'] ?? ''); ?>">
                         
                         <div class="form-group-inline">
                             <div class="form-group" style="flex: 1;">
                                 <label for="idPro">ID del Producto:</label>
-                                <input type="text" id="idPro" value="<?php echo $producto_seleccionado['idPro']; ?>" disabled>
+                                <input type="text" id="idPro" value="<?php echo htmlspecialchars($producto_seleccionado['idPro'] ?? ''); ?>" disabled>
                             </div>
                             <div class="form-group" style="flex: 2;">
                                 <label for="nombre">Nombre del Producto:</label>
-                                <input type="text" id="nombre" value="<?php echo htmlspecialchars($producto_seleccionado['nomPro']); ?>" disabled>
+                                <input type="text" id="nombre" value="<?php echo htmlspecialchars($producto_seleccionado['nomPro'] ?? ''); ?>" disabled>
                             </div>
                         </div>
 
-                        <diV>
+                        <div>
                             <label for="descripcion">Descripción:</label>
-                            <textarea id="descripcion" disabled><?php echo htmlspecialchars($producto_seleccionado['desPro']); ?></textarea>
+                            <textarea id="descripcion" disabled><?php echo htmlspecialchars($producto_seleccionado['desPro'] ?? ''); ?></textarea>
                         </div>
 
                         <div class="form-group-inline">
                             <div class="form-group" style="flex: 1;">
                                 <label for="precio">Precio Unitario:</label>
-                                <input type="text" id="precio" value="$<?php echo number_format($producto_seleccionado['preUni'], 2); ?>" disabled>
+                                <input type="text" id="precio" value="$<?php echo number_format($producto_seleccionado['preUni'] ?? 0, 2); ?>" disabled>
                             </div>
                             <div class="form-group" style="flex: 1;">
                                 <label for="categoria">Categoría:</label>
-                                <input type="text" id="categoria" value="<?php echo htmlspecialchars($producto_seleccionado['nomCat']); ?>" disabled>
+                                <input type="text" id="categoria" value="<?php echo htmlspecialchars($producto_seleccionado['nomCat'] ?? ''); ?>" disabled>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="cantidad_egresar">Cantidad del producto Vendido (Egreso/Salida):</label>
                             <input type="number" id="cantidad_egresar" name="cantidad_egresar" min="1" required 
-                                placeholder="Ingrese la cantidad de unidades a egresar">
+                                placeholder="Ingrese la cantidad de unidades a egresar"
+                                max="<?php echo htmlspecialchars($producto_seleccionado['stoAct'] ?? '1'); ?>">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="razon_egreso">Razón del Egreso/Venta:</label>
+                            <textarea id="razon_egreso" name="razon_egreso" rows="3" required placeholder="Ej: Venta al cliente #XYZ, Producto dañado, Devolución a proveedor."></textarea>
                         </div>
 
                         <div class="form-group">
@@ -113,7 +119,7 @@ $prev_categoria = $_POST['id_categoria'] ?? '';
                 </div>
 
             <?php 
-         
+            
             // FORMULARIO DE BÚSQUEDA Y RESULTADOS (Mantiene clases genéricas de búsqueda/tabla)
 
             else: 
@@ -125,14 +131,14 @@ $prev_categoria = $_POST['id_categoria'] ?? '';
                     <div class="filter-controls">
                         <div class="form-group search-input">
                             <input type="text" name="consulta_busqueda" placeholder="ID o Nombre del Producto"
-                                   value="<?php echo htmlspecialchars($prev_busqueda); ?>">
+                                        value="<?php echo htmlspecialchars($prev_busqueda); ?>">
                         </div>
                         
                         <div class="form-group category-select">
                             <select name="id_categoria">
                                 <option value="0">Filtrar por Categoría</option>
                                 <?php foreach ($categorias as $cat): ?>
-                                    <option value="<?php echo $cat['idCat']; ?>" 
+                                    <option value="<?php echo htmlspecialchars($cat['idCat']); ?>" 
                                             <?php echo ($prev_categoria == $cat['idCat']) ? 'selected' : ''; ?>>
                                         <?php echo htmlspecialchars($cat['nomCat']); ?>
                                     </option>
@@ -161,13 +167,13 @@ $prev_categoria = $_POST['id_categoria'] ?? '';
                             <tbody>
                                 <?php foreach ($productos_encontrados as $producto): ?>
                                     <tr>
-                                        <td><?php echo $producto['idPro']; ?></td>
+                                        <td><?php echo htmlspecialchars($producto['idPro']); ?></td>
                                         <td><?php echo htmlspecialchars($producto['nomPro']); ?></td>
                                         <td><?php echo htmlspecialchars($producto['nomCat']); ?></td>
-                                        <td class="stock-cell"><?php echo $producto['stoAct']; ?></td>
+                                        <td class="stock-cell"><?php echo htmlspecialchars($producto['stoAct']); ?></td>
                                         <td>
                                             <form action="registrarEgreso.php" method="POST" style="margin: 0;">
-                                                <input type="hidden" name="id_producto" value="<?php echo $producto['idPro']; ?>">
+                                                <input type="hidden" name="id_producto" value="<?php echo htmlspecialchars($producto['idPro']); ?>">
                                                 <button type="submit" name="seleccionar_producto" class="btn-select">Seleccionar</button>
                                             </form>
                                         </td>
