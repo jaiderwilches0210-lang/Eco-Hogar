@@ -17,9 +17,13 @@ $sql = $conexion->query("
     SELECT p.idPro, c.nomCat, p.nomPro, p.desPro, p.preUni, p.stoAct
     FROM productos p
     INNER JOIN categoria_producto c
-    ON p.idCatFK = c.idCat
+        ON p.idCatFK = c.idCat
     LIMIT $inicio, $porPagina
 ");
+
+if (!$sql) {
+    die("Error en la consulta: " . $conexion->error);
+}
 
 $totalPaginas = ceil($totalReg / $porPagina);
 ?>
