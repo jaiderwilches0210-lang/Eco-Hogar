@@ -26,16 +26,16 @@ if (isset($_POST['enviar_egreso'])) {
     $razon_egreso = trim($_POST['razon_egreso']);
     $fecha_actual = date('Y-m-d H:i:s'); 
     
-    // Asignar el ID de usuario desde la sesión o usar 1 como fallback (generalmente el Admin principal)
+
     $idUsuFK = isset($_SESSION['idUsu']) ? (int)$_SESSION['idUsu'] : 1; 
     
-    // --- VERIFICACIÓN CLAVE DE SEGURIDAD PARA EL ERROR DE FOREIGN KEY ---
+
     if ($idUsuFK < 1) { 
         $mensaje_resultado = "Error de Sesión: Debe iniciar sesión con un usuario válido para registrar movimientos.";
         $tipo_mensaje = "error";
-        // Finaliza la ejecución para evitar el intento de transacción
+
     } 
-    // --------------------------------------------------------------------
+
     
     else if ($idPro === false || $cantidad_egresar === false || $cantidad_egresar < 1) {
         $mensaje_resultado = "Error: Datos de egreso inválidos. La cantidad debe ser un número positivo.";
@@ -52,7 +52,7 @@ if (isset($_POST['enviar_egreso'])) {
         $nombre_usuario = 'Usuario ID: ' . $idUsuFK; 
 
         try {
-            // 1. Obtener Stock Actual, Nombre del Producto y verificar existencia
+
             $sql_check = "SELECT nomPro, stoAct FROM productos WHERE idPro = ? FOR UPDATE";
             if ($stmt_check = $conexion->prepare($sql_check)) {
                 $stmt_check->bind_param("i", $idPro);
@@ -88,7 +88,7 @@ if (isset($_POST['enviar_egreso'])) {
                 throw new Exception("Error al preparar la actualización de stock: " . $conexion->error);
             }
 
-            // 3. Registrar el movimiento (Tipo 2 = Egreso)
+
             $tipo_movimiento = 2; 
             $sql_movimiento = "INSERT INTO movimientos (idProFK, idUsuFK, tipMo, cantSto, fecMov, razEgre) 
                                VALUES (?, ?, ?, ?, ?, ?)";
@@ -96,7 +96,7 @@ if (isset($_POST['enviar_egreso'])) {
             if ($stmt_mov = $conexion->prepare($sql_movimiento)) {
                 $stmt_mov->bind_param("iiisis", 
                     $idPro, 
-                    $idUsuFK, // Usando el ID de usuario ya validado
+                    $idUsuFK, 
                     $tipo_movimiento, 
                     $cantidad_egresar, 
                     $fecha_actual, 
@@ -104,7 +104,6 @@ if (isset($_POST['enviar_egreso'])) {
                 );
                 
                 if (!$stmt_mov->execute()) {
-                    // Esta línea manejaría el error de Foreign Key si $idUsuFK aún es inválido (y muestra el error de MySQL)
                     throw new Exception("Error al registrar el movimiento: " . $stmt_mov->error); 
                 }
                 $stmt_mov->close();
@@ -112,12 +111,10 @@ if (isset($_POST['enviar_egreso'])) {
                 throw new Exception("Error al preparar el registro de movimiento: " . $conexion->error);
             }
 
-            // Si todo fue bien
+
             $conexion->commit();
             $mensaje_resultado = "Éxito: Se egresaron **{$cantidad_egresar}** unidades de **{$nombre_producto}**. Stock actual: **{$nuevo_stock}**.";
             $tipo_mensaje = "success";
-            
-            // Limpiar la variable para volver al formulario de búsqueda
             $_POST['seleccionar_producto'] = false;
 
         } catch (Exception $e) {
@@ -128,7 +125,7 @@ if (isset($_POST['enviar_egreso'])) {
     }
 }
 
-// Lógica para SELECCIONAR un producto
+
 if (isset($_POST['seleccionar_producto'])) {
     $idPro = filter_input(INPUT_POST, 'id_producto', FILTER_VALIDATE_INT);
     if ($idPro) {
@@ -152,7 +149,6 @@ if (isset($_POST['seleccionar_producto'])) {
 }
 
 
-// Lógica para FILTRAR/BUSCAR productos
 $consulta_busqueda = $_POST['consulta_busqueda'] ?? '';
 $id_categoria = filter_input(INPUT_POST, 'id_categoria', FILTER_VALIDATE_INT) ?? 0;
 
@@ -165,7 +161,7 @@ $parametros = [];
 $tipos = '';
 
 if (!empty($consulta_busqueda)) {
-    // Buscar por Nombre, Descripción o ID
+
     $sql_filtro .= " AND (p.nomPro LIKE ? OR p.desPro LIKE ? OR p.idPro = ?)";
     $parametros[] = "%$consulta_busqueda%";
     $parametros[] = "%$consulta_busqueda%";
@@ -183,7 +179,7 @@ $sql_filtro .= " ORDER BY p.nomPro LIMIT 50";
 
 if ($stmt_filtro = $conexion->prepare($sql_filtro)) {
     if (!empty($parametros)) {
-        // Enlazar parámetros dinámicamente
+
         $refs = [];
         foreach ($parametros as $key => $value) {
             $refs[$key] = &$parametros[$key];
@@ -199,11 +195,10 @@ if ($stmt_filtro = $conexion->prepare($sql_filtro)) {
     $stmt_filtro->close();
 }
 
-// Si se seleccionó un producto pero la selección falló (p.ej., producto no existe)
+
 if (isset($_POST['seleccionar_producto']) && $producto_seleccionado === null) {
     $mensaje_resultado = "Error: El producto seleccionado no pudo ser encontrado.";
     $tipo_mensaje = "error";
-    // Forzar a mostrar la lista de búsqueda
     $_POST['seleccionar_producto'] = false;
 }
 ?>

@@ -1,45 +1,80 @@
 <?php
-include("conexion/conexion.php"); 
+include("./conexion/conexion.php"); 
 
-$porPagina = 20;
+$registrosPorPagina = 10;
 
-$sql_count = $conexion->query("SELECT COUNT(idMov) AS total FROM movimientos");
+$pagina = isset($_GET['pag']) && is_numeric($_GET['pag']) ? (int)$_GET['pag'] : 1;
+$offset = ($pagina - 1) * $registrosPorPagina;
 
-$totalReg = 0;
-if ($sql_count) {
-    $totalReg = $sql_count->fetch_assoc()['total'];
+$adminName = $_GET['admin_name'] ?? ''; 
+$tipoMov = $_GET['tipo_mov'] ?? ''; 
+$filterDate = $_GET['filter_date'] ?? ''; 
+
+$whereClause = "WHERE 1=1 "; 
+
+if (!empty($adminName)) {
+    $adminNameEscaped = $conexion->real_escape_string($adminName);
+    $whereClause .= " AND u.nomUsu LIKE '%$adminNameEscaped%'";
 }
 
-$totalPaginas = ceil($totalReg / $porPagina);
-
-$pagina = isset($_GET['pag']) ? (int)$_GET['pag'] : 1;
-if ($pagina < 1) $pagina = 1;
-if ($pagina > $totalPaginas && $totalPaginas > 0) $pagina = $totalPaginas;
-
-$inicio = ($pagina - 1) * $porPagina;
-
-$sqlReporte = null; 
-
-if ($totalReg > 0) {
-    $sqlDatos = "SELECT 
-                    m.idMov, 
-                    u.nomUsu,
-                    m.tipMo,
-                    m.fecMov,
-                    p.nomPro,
-                    m.cantSto
-                 FROM movimientos m
-                 INNER JOIN usuarios u ON m.idUsuFK = u.idUsu
-                 INNER JOIN productos p ON m.idProFK = p.idPro
-                 ORDER BY m.fecMov DESC
-                 LIMIT $inicio, $porPagina";
-    
-    $resultadoDatos = $conexion->query($sqlDatos);
-
-    if ($resultadoDatos) {
-        $sqlReporte = $resultadoDatos; 
-    } else {
-        error_log("Error en consulta de reportes de movimientos: " . $conexion->error);
-    }
+if (!empty($tipoMov)) {
+    $tipoMovEscaped = $conexion->real_escape_string($tipoMov);
+    $whereClause .= " AND m.tipMo = '$tipoMovEscaped'";
 }
+
+if (!empty($filterDate)) {
+    $filterDateEscaped = $conexion->real_escape_string($filterDate);
+    $whereClause .= " AND DATE(m.fecMov) = '$filterDateEscaped'"; 
+}
+
+$sqlBase = "
+    SELECT 
+        m.idMov AS idMov,
+        u.nomUsu AS nomUsu,
+        CASE 
+            WHEN m.tipMo = 1 THEN 'Ingreso'
+            WHEN m.tipMo = 2 THEN 'Egreso'
+            WHEN m.tipMo = 3 THEN 'Actualización'
+            WHEN m.tipMo = 4 THEN 'Eliminación'
+            ELSE m.tipMo
+        END AS tipMo, 
+        m.fecMov AS fecMov,
+        p.nomPro AS nomPro, 
+        m.cantSto AS cantSto
+    FROM 
+        movimientos m
+    INNER JOIN 
+        usuarios u ON m.idUsuFK = u.idUsu
+    INNER JOIN 
+        productos p ON m.idProFK = p.idPro
+    {$whereClause}  
+    ORDER BY 
+        m.idMov DESC
+";
+
+$sqlCount = "SELECT COUNT(m.idMov) AS total FROM movimientos m {$whereClause}";
+$resultadoCount = $conexion->query($sqlCount);
+
+if ($resultadoCount === false) {
+    $totalRegistros = 0; 
+} else {
+    $filaCount = $resultadoCount->fetch_assoc();
+    $totalRegistros = (int)$filaCount['total'];
+}
+
+$totalPaginas = ceil($totalRegistros / $registrosPorPagina);
+
+if ($pagina > $totalPaginas && $totalPaginas > 0) {
+    $pagina = $totalPaginas;
+    $offset = ($pagina - 1) * $registrosPorPagina;
+}
+
+$sqlFinal = "{$sqlBase} LIMIT {$offset}, {$registrosPorPagina}";
+
+$sqlReporte = $conexion->query($sqlFinal);
+
+if ($sqlReporte === false) {
+    $sqlReporte = (object) array('num_rows' => 0, 'fetch_assoc' => function() { return null; }); 
+}
+
 ?>
