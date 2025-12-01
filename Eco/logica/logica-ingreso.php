@@ -1,13 +1,14 @@
 <?php
 
-include "conexion/conexion.php";
+session_start(); // Inicia la sesión para acceder a $_SESSION
 
+include "conexion/conexion.php"; 
 
-$producto_seleccionado = null;
+$producto_seleccionado = null; 
 $productos_encontrados = [];
-$categorias = [];
+$categorias = []; 
 $mensaje_resultado = '';
-
+$tipo_mensaje = '';
 
 $sql_categorias = "SELECT idCat, nomCat FROM categoria_producto ORDER BY nomCat";
 $res_categorias = $conexion->query($sql_categorias);
@@ -18,12 +19,11 @@ if ($res_categorias) {
     }
 }
 
-
 if (isset($_POST['enviar_ingreso'])) {
     
     $idPro = filter_input(INPUT_POST, 'id_producto', FILTER_VALIDATE_INT);
     $cantidad_ingresar = filter_input(INPUT_POST, 'cantidad_ingresar', FILTER_VALIDATE_INT);
-    $fecha_actual = date('Y-m-d H:i:s');
+    $fecha_actual = date('Y-m-d H:i:s'); 
     
     if ($idPro === false || $cantidad_ingresar === false || $cantidad_ingresar < 1) {
         $mensaje_resultado = "Error: Datos de ingreso inválidos. La cantidad debe ser un número positivo.";
@@ -34,11 +34,13 @@ if (isset($_POST['enviar_ingreso'])) {
         
         $stock_anterior = 0;
         $nombre_producto = '';
-        $idUsuFK = 102; 
+        
+        // RECUPERAR EL ID DEL USUARIO DE LA SESIÓN
+        $idUsuFK = isset($_SESSION['idUsu']) ? (int)$_SESSION['idUsu'] : 2; 
+        
         $nombre_usuario = 'Usuario ID: ' . $idUsuFK; 
 
         try {
-
             $sql_stock_actual = "SELECT stoAct, desPro FROM productos WHERE idPro = ?"; 
             $stmt_stock = $conexion->prepare($sql_stock_actual);
             $stmt_stock->bind_param("i", $idPro);
@@ -50,11 +52,10 @@ if (isset($_POST['enviar_ingreso'])) {
             }
             
             $producto = $res_stock->fetch_assoc();
-            $stock_anterior = $producto['stoAct'];
-            $nombre_producto = $producto['desPro'];
+            $stock_anterior = $producto['stoAct']; 
+            $nombre_producto = $producto['desPro']; 
             $stmt_stock->close();
             
-
             $sql_usuario = "SELECT nomUsu FROM usuarios WHERE idUsu = ?";
             if ($stmt_user = $conexion->prepare($sql_usuario)) {
                 $stmt_user->bind_param("i", $idUsuFK);
@@ -66,10 +67,8 @@ if (isset($_POST['enviar_ingreso'])) {
                 $stmt_user->close();
             }
             
-
             $nuevo_stock = $stock_anterior + $cantidad_ingresar; 
             
-
             $sql_update = "UPDATE productos SET stoAct = ? WHERE idPro = ?";
             $stmt_update = $conexion->prepare($sql_update);
             $stmt_update->bind_param("ii", $nuevo_stock, $idPro);
@@ -79,10 +78,8 @@ if (isset($_POST['enviar_ingreso'])) {
             }
             $stmt_update->close();
 
-
-            $tipo_movimiento = 1;
+            $tipo_movimiento = 1; 
             
-
             $razon_egreso = "Movimiento por INGRESO. Producto: " . htmlspecialchars($nombre_producto) . 
                             ". Operador: " . htmlspecialchars($nombre_usuario) . 
                             ". Stock Anterior: " . $stock_anterior . 
@@ -92,7 +89,6 @@ if (isset($_POST['enviar_ingreso'])) {
             $sql_movimiento = "INSERT INTO movimientos (idUsuFK, idProFK, tipMo, cantSto, fecMov, razEgre) VALUES (?, ?, ?, ?, ?, ?)";
             $stmt_mov = $conexion->prepare($sql_movimiento);
             
-
             $stmt_mov->bind_param("iiisis", $idUsuFK, $idPro, $tipo_movimiento, $cantidad_ingresar, $fecha_actual, $razon_egreso);
 
             if (!$stmt_mov->execute()) {
@@ -100,30 +96,24 @@ if (isset($_POST['enviar_ingreso'])) {
             }
             $stmt_mov->close();
             
-
             $conexion->commit();
             
- 
             $mensaje_resultado = " Stock del producto " . htmlspecialchars($nombre_producto) . " actualizado correctamente." . 
                                  "<br><h4>>Nuevo Stock:</h4>" . $nuevo_stock . " unidades." . 
                                  "<br><br>El movimiento ha sido registrado.<h5>";
             $tipo_mensaje = "success";
 
-
             header("Location: registrarIngreso.php?msg=" . urlencode($mensaje_resultado) . "&tipo=" . urlencode($tipo_mensaje));
-            exit();
+            exit(); 
             
         } catch (Exception $e) {
-
             $conexion->rollback();
-            // ⭐️ CORRECCIÓN: La conexión NO se cierra aquí.
             $mensaje_resultado = "Error en la transacción: " . $e->getMessage();
             $tipo_mensaje = "error";
             
         }
     }
 }
-
 
 
 if (isset($_POST['seleccionar_producto']) && isset($_POST['id_producto'])) {
@@ -143,14 +133,12 @@ if (isset($_POST['seleccionar_producto']) && isset($_POST['id_producto'])) {
             if ($resultado->num_rows > 0) {
                 $producto_seleccionado = $resultado->fetch_assoc(); 
                 $producto_seleccionado['nomPro'] = $producto_seleccionado['desPro'];
-                // Agregamos el campo desPro también para que la vista lo use
                 $producto_seleccionado['desPro'] = $producto_seleccionado['desPro']; 
             }
             $stmt->close();
         }
     }
 }
-
 
 
 $consulta_busqueda = $_POST['consulta_busqueda'] ?? '';
@@ -164,14 +152,12 @@ $sql_filtro = "SELECT p.idPro, p.desPro, p.stoAct, c.nomCat
 $parametros = [];
 $tipos = '';
 
-
 if (!empty($consulta_busqueda)) {
     $sql_filtro .= " AND (p.desPro LIKE ? OR p.idPro = ?)";
     $parametros[] = "%$consulta_busqueda%";
     $parametros[] = $consulta_busqueda;
     $tipos .= 'si'; 
 }
-
 
 if ($id_categoria > 0) {
     $sql_filtro .= " AND p.idCatFK = ?";
@@ -180,7 +166,6 @@ if ($id_categoria > 0) {
 }
 
 $sql_filtro .= " ORDER BY p.desPro LIMIT 50"; 
-
 
 if ($stmt_filtro = $conexion->prepare($sql_filtro)) {
     if (!empty($parametros)) {

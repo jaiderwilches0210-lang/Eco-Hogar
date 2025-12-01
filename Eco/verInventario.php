@@ -21,11 +21,9 @@ if (isset($_POST["regresarbtn"])) {
       <header class="main-header">
         <img src="imagenes/logo.png" alt="Logo de la Aplicación" style="border-radius: 50%;">
         
-        <form action="" method="POST" style="position: absolute; right: 30px; top: 30px; margin: 0;">
-            <button type="submit" name="regresar" class="regresarbtn">
-                Regresar
-            </button>
-        </form>
+
+        <a href="inicio.php" class ="regresarbtn">Regresar</a>
+        
     </header>
 <body>
     

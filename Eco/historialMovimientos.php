@@ -26,7 +26,7 @@ include("logica/logica-historial.php");
                 <li><a href="generarReportes.php">REPORTES</a></li>
                 <li style="margin-left: auto;"><a href="#">+</a></li>
             </ul>
-        <a href="inicio.php" class="regresarbtn">Cerrar Sesión</a>
+        <a href="inicio.php" class="regresarbtn">Regresar</a>
     </header>
     
 
