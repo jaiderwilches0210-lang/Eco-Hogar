@@ -1,4 +1,4 @@
--- Estructura de tabla para la tabla rol
+
 CREATE TABLE IF NOT EXISTS rol (
   idRol int(1) NOT NULL AUTO_INCREMENT,
   nomRol varchar(50) NOT NULL,
@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS rol (
   PRIMARY KEY (idRol)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Estructura de tabla para la tabla usuarios
+
 CREATE TABLE IF NOT EXISTS usuarios (
   idUsu int(11) NOT NULL AUTO_INCREMENT,
   nomUsu varchar(50) NOT NULL,
@@ -14,18 +14,19 @@ CREATE TABLE IF NOT EXISTS usuarios (
   clave varchar(100) NOT NULL,
   idRolFK int(11) NOT NULL,
   PRIMARY KEY (idUsu),
-  KEY relacionRolUsuario_fk (idRolFK)
+  KEY relacionRolUsuario_fk (idRolFK),
+  CONSTRAINT relacionRolUsuario_fk FOREIGN KEY (idRolFK)
+    REFERENCES rol(idRol) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 
--- Estructura de tabla para la tabla categoria_producto
 CREATE TABLE IF NOT EXISTS categoria_producto (
   idCat int(11) NOT NULL AUTO_INCREMENT,
   nomCat varchar(100) NOT NULL,
   PRIMARY KEY (idCat)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Estructura de tabla para la tabla productos
+
 CREATE TABLE IF NOT EXISTS productos (
   idPro int(11) NOT NULL AUTO_INCREMENT,
   idCatFK int(11) NOT NULL,
@@ -38,16 +39,18 @@ CREATE TABLE IF NOT EXISTS productos (
   umbMinSo int(11) NOT NULL,
   idEstProEnumFK int(11) NOT NULL,
   PRIMARY KEY (idPro),
-  KEY produ_fk (idCatFK)
+  KEY produ_fk (idCatFK),
+  CONSTRAINT produ_fk FOREIGN KEY (idCatFK)
+      REFERENCES categoria_producto(idCat) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Estructura de tabla para la tabla articuloinventariable
+
 CREATE TABLE IF NOT EXISTS articuloinventariable (
   nomPro varchar(100) NOT NULL,
   fecReg date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Estructura de tabla para la tabla movimientos
+
 CREATE TABLE IF NOT EXISTS movimientos (
   idMov int(11) NOT NULL AUTO_INCREMENT,
   idUsuFK int(11) NOT NULL,
@@ -58,10 +61,14 @@ CREATE TABLE IF NOT EXISTS movimientos (
   razEgre text NOT NULL,
   PRIMARY KEY (idMov),
   KEY moviUsu_fk (idUsuFK),
-  KEY movi_fk (idProFK)
+  KEY movi_fk (idProFK),
+  CONSTRAINT moviUsu_fk FOREIGN KEY (idUsuFK)
+      REFERENCES usuarios(idUsu) ON DELETE CASCADE,
+  CONSTRAINT movi_fk FOREIGN KEY (idProFK)
+      REFERENCES productos(idPro) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Estructura de tabla para la tabla auditoria_operaciones
+
 CREATE TABLE IF NOT EXISTS auditoria_operaciones (
   idReg int(11) NOT NULL AUTO_INCREMENT,
   idUsuFK int(11) NOT NULL,
@@ -70,10 +77,14 @@ CREATE TABLE IF NOT EXISTS auditoria_operaciones (
   fecMov date NOT NULL,
   PRIMARY KEY (idReg),
   KEY audiConUsu_fk (idUsuFK),
-  KEY audiConMov_fk (idMovFK)
+  KEY audiConMov_fk (idMovFK),
+  CONSTRAINT audiConUsu_fk FOREIGN KEY (idUsuFK)
+      REFERENCES usuarios(idUsu) ON DELETE CASCADE,
+  CONSTRAINT audiConMov_fk FOREIGN KEY (idMovFK)
+      REFERENCES movimientos(idMov) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Estructura de tabla para la tabla configuracion_reporte
+
 CREATE TABLE IF NOT EXISTS configuracion_reporte (
   idRepor int(11) NOT NULL AUTO_INCREMENT,
   idUsuFK int(11) NOT NULL,
@@ -82,10 +93,14 @@ CREATE TABLE IF NOT EXISTS configuracion_reporte (
   idProFK int(11) NOT NULL,
   PRIMARY KEY (idRepor),
   KEY configRepor_fk (idUsuFK),
-  KEY configuracion_reporte_fk (idProFK)
+  KEY configuracion_reporte_fk (idProFK),
+  CONSTRAINT configRepor_fk FOREIGN KEY (idUsuFK)
+      REFERENCES usuarios(idUsu) ON DELETE CASCADE,
+  CONSTRAINT configuracion_reporte_fk FOREIGN KEY (idProFK)
+      REFERENCES productos(idPro) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Estructura de tabla para la tabla inventario
+
 CREATE TABLE IF NOT EXISTS inventario (
   idInv int(11) NOT NULL AUTO_INCREMENT,
   idProFK int(11) NOT NULL,
@@ -94,38 +109,19 @@ CREATE TABLE IF NOT EXISTS inventario (
   estInv int(11) NOT NULL,
   EstadoActivo tinyint(1) NOT NULL,
   PRIMARY KEY (idInv),
-  KEY inventario_fk (idProFK)
+  KEY inventario_fk (idProFK),
+  CONSTRAINT inventario_fk FOREIGN KEY (idProFK)
+      REFERENCES productos(idPro) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- 4. RESTRICCIONES (FOREIGN KEYS)
-ALTER TABLE usuarios
-  ADD CONSTRAINT relacionRolUsuario_fk FOREIGN KEY (idRolFK) REFERENCES rol (idRol);
-
-ALTER TABLE productos
-  ADD CONSTRAINT produ_fk FOREIGN KEY (idCatFK) REFERENCES categoria_producto (idCat);
-
-ALTER TABLE movimientos
-  ADD CONSTRAINT moviUsu_fk FOREIGN KEY (idUsuFK) REFERENCES usuarios (idUsu),
-  ADD CONSTRAINT movi_fk FOREIGN KEY (idProFK) REFERENCES productos (idPro);
-
-ALTER TABLE auditoria_operaciones
-  ADD CONSTRAINT audiConUsu_fk FOREIGN KEY (idUsuFK) REFERENCES usuarios (idUsu),
-  ADD CONSTRAINT audiConMov_fk FOREIGN KEY (idMovFK) REFERENCES movimientos (idMov);
-
-ALTER TABLE configuracion_reporte
-  ADD CONSTRAINT configRepor_fk FOREIGN KEY (idUsuFK) REFERENCES usuarios (idUsu),
-  ADD CONSTRAINT configuracion_reporte_fk FOREIGN KEY (idProFK) REFERENCES productos (idPro);
-
-ALTER TABLE inventario
-  ADD CONSTRAINT inventario_fk FOREIGN KEY (idProFK) REFERENCES productos (idPro);
 
 COMMIT;
 
-INSERT INTO rol (idRol, nomRol, desRol) VALUES
-(1, 'admin', 'Administrador del sistema'),
-(2, 'usuario', 'Usuario general');
 
-INSERT INTO categoria_producto (idCat, nomCat) VALUES
-(1, 'Tecnología'),
-(2, 'Ropa'),
-(3, 'Hogar');
+INSERT INTO rol (nomRol, desRol) VALUES
+('admin', 'Administrador del sistema'),
+('usuario', 'Usuario general');
+
+INSERT INTO categoria_producto (nomCat) VALUES
+('Tecnología'),
+('Ropa'),
+('Hogar');
