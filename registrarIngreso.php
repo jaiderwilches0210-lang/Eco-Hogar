@@ -22,8 +22,7 @@ $prev_categoria = $_POST['id_categoria'] ?? '';
     <?php include './components/sidebar.php'; ?>
     <main class="content-area">
     <header class="topbar">
-            <h1>Ingresos</h1>   
-        
+            <h1>Ingresos</h1>          
         <form action="inicio.php" method="POST" style="position: absolute; right: 30px; top: 30px; margin: 0;">
             <button type="submit" name="regresarbtn" class="regresarbtn">Regresar</button>
         </form>

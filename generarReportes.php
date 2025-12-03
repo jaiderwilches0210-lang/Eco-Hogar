@@ -15,6 +15,7 @@ if (isset($_POST["regresarbtn"])) {
     <title>Generar Reportes</title>
     <style>
         @import url('css/style-verInventario.css'); 
+        @import url('css/style-historial.css');
     
     </style>
 </head>
@@ -24,12 +25,11 @@ if (isset($_POST["regresarbtn"])) {
      <main class="content-area">
     <header class="topbar">
        <h1>REPORTES</h1>
-        
             <button type="button" class="regresarbtn" style="margin-left: 10px;">
                 Cerrar Sesión
             </button> 
     </header>
-    
+<!-- La primera palabra de cada párrafo está en negrita 
     <ul class="nav-menu">
         <li><a href="inicio.php">INICIO</a></li>
         <li><a href="registrarProducto.php">REGISTRAR</a></li>
@@ -37,14 +37,37 @@ if (isset($_POST["regresarbtn"])) {
         <li><a href="historialMovimientos.php">HISTORIAL</a></li>
         <li><a href="generarReportes.php" style="color: #4CAF50;">REPORTES</a></li>
     </ul>
-
+-->
     <div class="admin-box">
-        <h2>Generar Reporte</h2> 
-        <div class="report-container">
+        <div class="historial-filters">
+            <div class="filter-group">
+                <label for="admin_name">Filtrar por Nombre Administrador:</label>
+                <input type="text" id="admin_name" name="admin_name" placeholder="Nombre Admin">
+            </div>
+
+            <div class="filter-group">
+                <label for="tipo_mov">Filtrar por Tipo:</label>
+                <select id="tipo_mov" name="tipo_mov">
+                    <option value="">Todos</option>
+                    <option value="1">Ingreso</option>
+                    <option value="2">Egreso</option>
+                    <option value="3">Actualización</option>
+                    <option value="4">Eliminación</option>
+                </select>
+            </div>
             
-            <div class="data-table-section">
-                <table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%;">
-                    <tr style="background-color: #4CAF50; color: white; text-align: left;">
+            <div class="filter-group">
+                <label for="filter_date">Filtrar por Fecha:</label>
+                <input type="date" id="filter_date" name="filter_date">
+            </div>
+            
+            <button type="button" class="btn-filter" style="padding: 5px 10px; background-color: #4CAF50; color: white; border: none; border-radius: 3px; cursor: pointer;">
+                Filtrar
+            </button>
+        </div>
+
+               <table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%;">
+            <tr style="background: linear-gradient(135deg, #43a047, #1b5e20); color: white; text-align: left;">
                         <th>ID M</th>
                         <th>Usuario</th>
                         <th>Tipo</th>

@@ -80,12 +80,7 @@ if (isset($_POST["regresarbtn"])) {
         <span class="disabled">&#10095;</span>
     <?php endif; ?>
 
-</div>
-
-
-
-        
-        
+</div>          
     </div>
 </body>
 </html>

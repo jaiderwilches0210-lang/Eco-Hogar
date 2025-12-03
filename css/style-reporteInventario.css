@@ -15,7 +15,23 @@ body {
         background: transparent; /* Hace transparente el fondo de la barra */
     }
 }
+header {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(15px);
+    width: 98%;
+    max-width: 2000px;
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 0 0 35px 35px;
+    border: 2px solid rgba(255,255,255,0.4);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    padding: 0.5rem 3rem;
+    gap: 2rem;
+}
 .regresarbtn {
+    margin-top: 20px;
     background: #ff4b5c;
     border: none;
     color: white;
@@ -47,6 +63,12 @@ body {
     border: 2px solid rgba(255,255,255,0.4);
     background: rgba(255,255,255,0.1);
     box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+}
+.admin-box h2 {
+     margin: 10px;
+       color: #6cc28a;
+       -webkit-text-stroke: 1px #225544;
+       font-size: 28px;    
 }
 .titulo-area {
     font-family: 'Poppins', sans-serif;
@@ -175,7 +197,7 @@ body {
 
 .registro-box label {
 
-    color: #006a84; 
+    color: #155704; 
     font-size: 0.95em;
 }
 
@@ -246,7 +268,7 @@ body {
     flex: 1; 
     border-radius: 10px;
     border: none;
-    background: linear-gradient(90deg, #0094b8, #006a84); 
+    background: #369c47; 
     color: white;
     font-size: 16px;
     cursor: pointer;
@@ -288,7 +310,7 @@ body {
 }
 
 .results-table th {
-    background: #006a84; 
+    background: #288365; 
     color: white;
     padding: 12px;
     text-align: left;
@@ -349,7 +371,7 @@ body {
     padding: 15px;
     border-radius: 10px;
     border: none;
-    background: linear-gradient(90deg, #0094b8, #006a84); 
+    background: #288365; 
     color: white;
     font-size: 16px;
     cursor: pointer;
@@ -358,7 +380,7 @@ body {
     box-shadow: 0 4px 10px rgba(0, 148, 184, 0.3);
 }
 .btn-group button.btn-submit:hover {
-    background: linear-gradient(90deg, #00a0c4, #007490); 
+    background: linear-gradient(90deg, #2ee6be, #00903c); 
     transform: translateY(-2px);
     box-shadow: 0 6px 15px rgba(0, 148, 184, 0.4);
 }

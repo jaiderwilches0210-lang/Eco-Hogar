@@ -14,7 +14,7 @@ body {
     flex-direction: column;
     align-items: center;
     padding: 1rem;
-    overflow: auto;
+    overflow: hidden;
 }
 
 /* HEADER */
@@ -134,11 +134,9 @@ h2 {
     align-items: center;
     justify-content: space-between;
     width: 100%;
-
     background: rgba(255, 255, 255, 0.18);
     backdrop-filter: blur(18px) ;
     -webkit-backdrop-filter: blur(18px) ;
-    
     padding: 20px 30px;
     border-radius: 30px;
     border: 1px solid rgba(255, 255, 255, 0.35);
@@ -174,7 +172,7 @@ h2 {
 
 .filter-group input:focus,
 .filter-group select:focus {
-    border-color: #4CAF50;
+    border-color: #4E796B;
     box-shadow: 0 0 8px rgba(76, 175, 80, 0.4);
 }
 
@@ -203,15 +201,18 @@ h2 {
 }
 
 .tabla-historial th {
-    background: #4CAF50;
+    background: #4E796B;
     color: white;
     text-align: left;
     padding: 10px;
 }
-
-.tabla-historial td {
+.tabla-historial tr {
     background: #333;
     padding: 10px;
+}
+.tabla-historial td {
+    background: #333;
+    padding: 30px;
 }
 
 .center {

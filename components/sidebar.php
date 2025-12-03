@@ -41,5 +41,10 @@
                     class="button-a"
                 >Generar Reportes</a></li>
             </ul>
+            <li><a 
+                    href="generarReporteInventario.php" 
+                    class="button-a"
+                >Generar Reporte Inventario</a></li>
+            </ul>
         </nav>
   </div>

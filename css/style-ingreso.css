@@ -15,7 +15,7 @@ body {
      margin: 10px;
        color: #A7D7B8;
        -webkit-text-stroke: 1px #4E796B;
-       font-size: 18px;    
+       font-size: 28px;    
 }
 /* TOPBAR */
 .topbar {
@@ -32,7 +32,7 @@ body {
     font-weight: 600;
 }
 .regresarbtn {
-    margin-top: 20px;
+
     background: #ff4b5c;
     border: none;
     color: white;
@@ -77,11 +77,11 @@ body {
     width: 100%; 
     font-size: 20px;
     text-align: center;
-    -webkit-text-stroke: 1px #A7D7B8; 
+    -webkit-text-stroke: 1px #2D5C5A; 
 
     text-shadow: 
         2px 2px 4px rgba(0, 0, 0, 0.7), 
-        0 0 10px rgba(0, 148, 184, 0.5); 
+        0 0 10px #2D5C5A; 
     padding: 15px 0;
     margin-bottom: 20px;
     font-weight: 70; 
@@ -134,7 +134,7 @@ body {
    
     font-family: 'Montserrat', sans-serif;
     text-decoration: none;
-    color: #A7D7B8; 
+    color: #2D5C5A; 
     font-size: 15px; 
     font-weight: 600; 
     padding: 8px 12px;
@@ -166,14 +166,14 @@ body {
     margin-bottom: 25px;
     font-size: 28px;
     font-weight: 700;
-    color: #00394d;
+    color: #2D5C5A;
     letter-spacing: 0;
     text-align: center;
 }
 
 .info-title {
     font-size: 1.1em;
-    color: #A7D7B8;
+    color: #2D5C5A;
     font-weight: 600;
     margin: 10px 0 15px 0;
     border-bottom: 2px solid #eef4ff;
@@ -223,7 +223,7 @@ body {
 .registro-box input:focus,
 .registro-box select:focus,
 .registro-box textarea:focus {
-    border-color: #2ba155;
+    border-color: #2D5C5A;
     background: white; 
     box-shadow: 0 0 5px rgba(0,148,184,0.5);
 }
@@ -272,7 +272,7 @@ body {
     padding: 12px 15px;
     border-radius: 10px;
     border: none;
-    background: #A7D7B8; 
+    background: #2D5C5A; 
     color: white;
     font-size: 16px;
     cursor: pointer;
@@ -311,7 +311,7 @@ body {
 }
 
 .results-table th {
-    background: #A7D7B8; /* Azul oscuro corporativo */
+    background: #2D5C5A; /* Azul oscuro corporativo */
     color: white;
     padding: 12px;
     text-align: left;
@@ -336,7 +336,7 @@ body {
     padding: 8px 12px;
     border-radius: 6px;
     border: none;
-    background: #28a745; 
+    background: #45996b; 
     color: white;
     font-size: 13px;
     cursor: pointer;
@@ -345,7 +345,7 @@ body {
 }
 
 .btn-select:hover {
-    background: #218838;
+    background: #35837f;
 }
 
 /* BOTONES DE ACCIÓN */
@@ -372,7 +372,7 @@ body {
     padding: 15px;
     border-radius: 10px;
     border: none;
-    background: linear-gradient(90deg, #0094b8, #006a84); 
+    background: #45996b; 
     color: white;
     font-size: 16px;
     cursor: pointer;

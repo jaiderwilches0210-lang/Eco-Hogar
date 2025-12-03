@@ -21,9 +21,8 @@ include_once 'logica/logica-reporte-inventario.php';
 
     <main class="content-area">
      <header class="topbar">
-        <h1>Productos</h1>
-        <img src="imagenes/logo.png" alt="Logo de la Aplicación" style="border-radius: 50%;">
-
+        <h1>Reportes</h1>
+<!-- 
         <nav class="main-nav-menu">
         <ul>
             <li><a href="verInventario.php">Inventario</a></li>
@@ -32,13 +31,14 @@ include_once 'logica/logica-reporte-inventario.php';
             <li><a href="registrarIngreso.php">Ingreso</a></li> 
             <li><a href="generarReporteInventario.php">Reportes</a></li> </ul>
     </nav>
-        <form action="inicio.php" method="POST" style="position: absolute; right: 30px; top: 30px; margin: 0;">
+    -->
+        <form action="inicio.php" method="POST" style="right: 30px; top: 10px; margin: 0;">
             <button type="submit" name="regresarbtn" class="regresarbtn">Regresar</button>
         </form>
     </header>
-    </main>
+    
     <div class="admin-box">
-        <h2 style="color: white;">Generación de Reportes</h2> 
+        <h2>Generación de Reportes</h2> 
 
         <div class="registro-box wide"> 
 

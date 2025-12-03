@@ -25,7 +25,7 @@
     height: 80px;
     object-fit: cover;
     border-radius: 50%;
-    border: 2px solid #003366;
+    border: 2px solid rgb(26, 146, 86);
 }
 
 .header-info {
@@ -35,7 +35,7 @@
 
 .header-info h1 {
     font-size: 1.5em;
-    color: #003366; 
+    color: #4CAF50; 
     margin: 0 0 8px 0;
     text-transform: uppercase;
     font-weight: 800;
@@ -50,7 +50,7 @@
 .document-separator {
     border: 0;
     height: 2px;
-    background-color: #003366; 
+    background-color: #4CAF50; 
     margin: 20px 0;
 }
 
@@ -98,10 +98,10 @@
 }
 
 .reporte-final-documento .data-table th {
-    background-color: #003366; 
+    background-color: #4CAF50; 
     color: white;
     font-weight: 700;
-    border: 1px solid #003366;
+    border: 1px solid #4CAF50;
     padding: 10px 15px;
     text-align: left;
     text-transform: uppercase;
@@ -165,14 +165,14 @@
 
 .report-actions .btn-secondary {
     /* Azul/Gris para Imprimir */
-    background: #007bff; 
+    background: #4CAF50; 
     color: white;
-    border-color: #007bff;
+    border-color: #0c7410;
 }
 
 .report-actions .btn-secondary:hover {
-    background: #0069d9; 
-    border-color: #0062cc;
+    background: #60db64; 
+    border-color: #4CAF50;
     transform: translateY(-2px);
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
 }

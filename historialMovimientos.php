@@ -17,17 +17,13 @@ include("logica/logica-historial.php");
 
 <body>
     <?php include './components/sidebar.php'; ?>
-
     <main class="content-area">
     <header class="topbar">
         <h1>Historial de Movimientos</h1>
         <a href="inicio.php" class="regresarbtn">Regresar</a>
-    </header>
-    
+          </header>
 
-
-    <div class="admin-box">
-        
+    <div class="admin-box">   
         <div class="historial-filters">
             <div class="filter-group">
                 <label for="admin_name">Filtrar por Nombre Administrador:</label>
@@ -57,7 +53,7 @@ include("logica/logica-historial.php");
         
         
         <table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%;">
-            <tr style="background-color: #4CAF50; color: white; text-align: left;">
+            <tr style="background: linear-gradient(135deg, #43a047, #1b5e20); color: white; text-align: left;">
                 <th>ID M.</th>
                 <th>Producto</th>
                 <th>Tipo</th>
