@@ -15,91 +15,19 @@ if (isset($_POST["regresarbtn"])) {
     <title>Generar Reportes</title>
     <style>
         @import url('css/style-verInventario.css'); 
-        
-        .admin-box {
-            max-width: 1200px;
-            margin: 40px auto;
-            padding: 20px;
-        }
-
-        .report-container {
-            display: flex;
-            gap: 20px;
-            margin-top: 20px;
-        }
-
-        .data-table-section {
-            flex: 5;
-            min-width: 800px;
-        }
-
-        .filters-panel {
-            flex: 1; 
-            background-color: #f9f9f9;
-            padding: 15px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            height: fit-content;
-        }
-        .filter-group {
-            margin-bottom: 15px;
-        }
-
-        .filter-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-        
-        .filter-group select, .filter-group input {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-        
-        .action-buttons {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 0;
-            border-top: 1px solid #ddd;
-            margin-top: 20px;
-        }
-        
-        .nav-menu {
-            display: flex;
-            list-style: none;
-            padding: 10px;
-            background-color: #eee;
-            margin: 0;
-            border-bottom: 2px solid #4CAF50;
-        }
-        .nav-menu li a {
-            padding: 10px 15px;
-            text-decoration: none;
-            color: #333;
-            font-weight: bold;
-        }
-        .nav-menu li a:hover {
-            background-color: #ddd;
-        }
-        
+    
     </style>
 </head>
 
 <body>
      <?php include './components/sidebar.php'; ?>
-    <header class="main-header">
-        <img src="imagenes/logo.png" alt="Logo" style="border-radius: 50%;">
+     <main class="content-area">
+    <header class="topbar">
+       <h1>REPORTES</h1>
         
-        <span style="position: absolute; right: 30px; top: 30px; margin: 0; color: #4CAF50; font-weight: bold;">
-            NOMBRE ADMINISTRADOR
             <button type="button" class="regresarbtn" style="margin-left: 10px;">
                 Cerrar Sesión
-            </button>
-        </span>
+            </button> 
     </header>
     
     <ul class="nav-menu">
@@ -112,7 +40,6 @@ if (isset($_POST["regresarbtn"])) {
 
     <div class="admin-box">
         <h2>Generar Reporte</h2> 
-        
         <div class="report-container">
             
             <div class="data-table-section">
@@ -181,6 +108,7 @@ if (isset($_POST["regresarbtn"])) {
                 
             </div>
             
+            
             <div class="filters-panel">
                 <h4>Filtros</h4>
                 <form action="generarReportes.php" method="GET">
@@ -219,23 +147,21 @@ if (isset($_POST["regresarbtn"])) {
                 </form>
             </div>
         </div>
-        
+     
         <div class="action-buttons">
-            <div>
+            
                 <button type="button" style="background-color: #337ab7; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer;">
                     Exportar en Excel
                 </button>
-            </div>
-            <div>
+           
                 <button type="button" style="background-color: #f0ad4e; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer;">
                     Imprimir Reporte
                 </button>
                 <button type="button" style="background-color: #d9534f; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; margin-left: 10px;">
                     Cancelar Reporte
                 </button>
-            </div>
         </div>
-
     </div>
+    
 </body>
 </html>

@@ -17,13 +17,14 @@ $prev_categoria = $_POST['id_categoria'] ?? '';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro de Egreso/Salida | Admin</title>
     
-    <link rel="stylesheet" href="css/style-admin.css"> 
     <link rel="stylesheet" href="css/style-egreso.css"> 
 
 </head>
 <body>
     <?php include './components/sidebar.php'; ?>
-    <header>
+    <main class="content-area">
+    <header  class="topbar">
+        <h1>Egresos</h1>
         <form action="inicio.php" method="POST" style="position: absolute; right: 30px; top: 30px; margin: 0;">
             <button type="submit" name="regresarbtn" class="regresarbtn">Regresar</button>
         </form>
@@ -31,7 +32,7 @@ $prev_categoria = $_POST['id_categoria'] ?? '';
 
 
     <div class="admin-box">
-        <h2 style="color: white; ">Egreso/Salida de Stock de Producto</h2>
+        <h2>Egreso/Salida de Stock de Producto</h2>
 
         <div class="registro-box <?php echo ($producto_seleccionado === null) ? 'wide' : ''; ?>"> 
 

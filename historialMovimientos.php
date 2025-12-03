@@ -17,15 +17,16 @@ include("logica/logica-historial.php");
 
 <body>
     <?php include './components/sidebar.php'; ?>
-    <header class="main-header">
-        <img src="imagenes/logo.png" alt="Logo de la Aplicación" style="border-radius: 50%;">
+
+    <main class="content-area">
+    <header class="topbar">
+        <h1>Historial de Movimientos</h1>
         <a href="inicio.php" class="regresarbtn">Regresar</a>
     </header>
     
 
 
     <div class="admin-box">
-        <h2>Historial de Movimientos</h2>
         
         <div class="historial-filters">
             <div class="filter-group">

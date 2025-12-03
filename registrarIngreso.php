@@ -16,24 +16,20 @@ $prev_categoria = $_POST['id_categoria'] ?? '';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro de Ingreso | Admin</title>
-    <style>
-        @import url('css/style-admin.css');
-    </style>
     <link rel="stylesheet" href="css/style-ingreso.css"> 
 </head>
 <body>
     <?php include './components/sidebar.php'; ?>
-    <header class="main-header">
-    
+    <main class="content-area">
+    <header class="topbar">
+            <h1>Ingresos</h1>   
+        
         <form action="inicio.php" method="POST" style="position: absolute; right: 30px; top: 30px; margin: 0;">
             <button type="submit" name="regresarbtn" class="regresarbtn">Regresar</button>
         </form>
-    </header>
-
-
+</header> 
     <div class="admin-box">
-          <h2 style="color: white; " >Registro Ingreso Stock </h2>
-
+          <h2 >Registro Ingreso Stock </h2>
         <div class="registro-box <?php echo ($producto_seleccionado === null) ? 'wide' : ''; ?>"> 
 
             <?php if (!empty($mensaje)): ?>
@@ -163,6 +159,6 @@ $prev_categoria = $_POST['id_categoria'] ?? '';
 
         </div>
     </div>
-
+</main>
 </body>
 </html>

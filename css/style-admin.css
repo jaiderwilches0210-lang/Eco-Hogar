@@ -2,43 +2,33 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Segoe UI', sans-serif;
+    font-family: "Poppins", sans-serif;
 }
 
 body {
-    background: linear-gradient(135deg, #00f8b6 0%, #006e93 100%);
-    min-height: 100vh;
+     background: #F8F6F1;
+    min-height: 70 vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 1rem;
 }
-
-header {
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(15px);
-    width: 95%;
-    max-width: 2000px;
-    height: 10vh;
+.topbar {
+    background: #F8F6F1;
+    padding: 15px 25px;
+    border-radius: 12px;
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    position: relative;
-    border-radius: 0 0 35px 35px;
-    overflow: hidden;
-    border: 2px solid rgba(255, 255, 255, 0.25);
-    box-shadow: 0 15px 40px rgba(0,0,0,0.15);
-    padding: 0 2rem;
+    align-items: center;
 }
 
-img {
-    height: 60px;
-    width: 60px;
-    
-    object-fit: cover;
+.topbar h1 {
+    font-size: 26px;
+    font-weight: 600;
 }
 
-.cerrar-sesion {
+
+.regresarbtn{
     background: #ff4b5c;
     border: none;
     color: white;
@@ -54,19 +44,14 @@ img {
 }
 
 .admin-box {
-    width: 95%;
+    width: 100%;
     max-width: 2000px;
-    min-height: 85vh;
+    min-height: 80vh;
     margin-top: 20px;
-
     /* CAMBIOS CLAVE: Uso de GRID para la estructura */
     display: grid;
     grid-template-columns: auto 250px; 
     grid-template-rows: auto 1fr;
-    grid-template-areas: 
-        "titulo titulo"
-        "contenido sidebar";
-    
     gap: 1rem;
     border-radius: 35px;
     overflow: hidden;
@@ -88,95 +73,11 @@ img {
     font-size: 2em;
     margin: 0;
 }
-/* Sidebar */
-.sidebar {
-    grid-area: sidebar; /* Asignación para Grid */
-    flex: none; /* ELIMINA flex: 0 0 250px; si existe */
-    padding: 20px;
-    
-    
-    border-radius: 35px 0 0 35px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    box-sizing: border-box;
-}
-
-
-
-.sidebar ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    height: 100%;
-    position: relative;
-}
-
-.sidebar ul::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: 0;
-    height: 100%;
-    width: 2px;
-    background-color: white;
-    z-index: 0;
-}
-
-.sidebar li {
-    margin: 40px 0;
-    /* espacio entre los elementos */
-
-
-
-    
-}
-
-.sidebar a {
-    display: block;
-    padding: 8px 15px;
-    text-decoration: none;
-    text-align: center;
-    font-size: 16px;
-    font-weight: 600;
-    width: 100%;
-    color: white;
-    
-    border: 2px solid white;
-    border-right: none;
-    border-radius: 20px;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-    padding-right: 5px;
-    position: relative;
-    transition: all 0.2s ease;
-    z-index: 1;
-}
-
-.sidebar a::after {
-    content: '';
-    position: absolute;
-    top: -2px;
-    right: 0;
-    width: 2px;
-    height: calc(100% + 4px);
-    background-color: white;
-    z-index: 1;
-}
-
-.sidebar a:hover {
-    background-color: rgba(255, 255, 255, 0.3);
-    color: white;
-}
-
 
 .content-area {
-    grid-area: contenido; 
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start; 
-    justify-content: flex-start; 
-    padding-top: 0; 
+    margin-left: 250px; /* Igual al ancho del sidebar */
+    padding: 20px;
+    width: calc(100% - 250px);
 }
 
 .container {
@@ -255,7 +156,7 @@ img {
 .color:hover img {
     transform: scale(1.05);
 }
-
+/* ESTILOS RESPONSIVOS 
 @media (max-width: 900px) {
     .admin-box {
         flex-direction: column;
@@ -281,4 +182,4 @@ img {
         height: 300px;
         max-width: 100%;
     }
-}
+}*/

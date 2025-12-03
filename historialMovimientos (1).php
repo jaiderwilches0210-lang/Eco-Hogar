@@ -16,6 +16,7 @@ include("logica/logica-historial.php");
 </head>
 
 <body>
+    <?php include './components/sidebar.php'; ?>
     <header class="main-header">
         <img src="imagenes/logo.png" alt="Logo de la Aplicación" style="border-radius: 50%;">
             <ul class="nav-menu">

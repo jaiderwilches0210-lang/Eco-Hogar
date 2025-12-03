@@ -17,7 +17,11 @@ include_once 'logica/logica-reporte-inventario.php';
     
 </head>
 <body class="<?php echo 'reporte-' . htmlspecialchars($reporte_tipo); ?>">
-     <header class="main-header">
+    <?php include './components/sidebar.php'; ?>
+
+    <main class="content-area">
+     <header class="topbar">
+        <h1>Productos</h1>
         <img src="imagenes/logo.png" alt="Logo de la Aplicación" style="border-radius: 50%;">
 
         <nav class="main-nav-menu">
@@ -32,7 +36,7 @@ include_once 'logica/logica-reporte-inventario.php';
             <button type="submit" name="regresarbtn" class="regresarbtn">Regresar</button>
         </form>
     </header>
-
+    </main>
     <div class="admin-box">
         <h2 style="color: white;">Generación de Reportes</h2> 
 

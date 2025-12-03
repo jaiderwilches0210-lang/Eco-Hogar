@@ -16,23 +16,6 @@ body {
     overflow: hidden;
 }
 
-/* HEADER */
-header {
-    background: rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(15px);
-    width: 98%;
-    max-width: 2000px;
-    min-height: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-radius: 0 0 35px 35px;
-    border: 2px solid rgba(255,255,255,0.4);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.25);
-    padding: 0.5rem 3rem;
-    gap: 2rem;
-}
-
 header img {
     height: 65px;
     width: 65px;
@@ -52,13 +35,31 @@ header img {
     letter-spacing: 0.5px;
     transition: all 0.3s ease;
 }
-
+.content-area {
+ margin-left: 250px; /* Igual al ancho del sidebar */
+    padding: 20px;
+    width: calc(100% - 250px);
+   
+}
 .regresarbtn:hover {
     background: #e63946;
     transform: translateY(-2px);
     box-shadow: 0 5px 10px rgba(0,0,0,0.2);
 }
+/* TOPBAR */
+.topbar {
+    background: #F8F6F1;
+    padding: 15px 25px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
+.topbar h1 {
+    font-size: 26px;
+    font-weight: 600;
+}
 /* CONTENEDOR PRINCIPAL CENTRADO */
 .admin-box {
     width: 98%;
@@ -76,7 +77,71 @@ header img {
     box-shadow: 0 15px 40px rgba(0,0,0,0.25);
 }
 
+        .report-container {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
 
+        .data-table-section {
+            flex: 5;
+            min-width: 800px;
+        }
+
+        .filters-panel {
+            flex: 1; 
+            background-color: #f9f9f9;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            height: fit-content;
+            width: 400px;
+        }
+        .filter-group {
+            margin-bottom: 15px;
+        }
+
+        .filter-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        .filter-group select, .filter-group input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        
+        .action-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-top: 1px solid #ddd;
+            margin-top: 20px;
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            padding: 10px;
+            background-color: #eee;
+            margin: 0;
+            border-bottom: 2px solid #4CAF50;
+        }
+        .nav-menu li a {
+            padding: 10px 15px;
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+        }
+        .nav-menu li a:hover {
+            background-color: #ddd;
+        }
+        
 
 
 
