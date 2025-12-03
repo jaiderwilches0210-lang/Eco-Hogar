@@ -3,44 +3,34 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+   font-family: "Poppins", sans-serif;
 }
 
 body {
-    background: linear-gradient(135deg, #00f8b6 0%, #006e93 100%);
-    min-height: 100vh;
+    background: #F8F6F1;
+    min-height: 70 vh;
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 1rem;
-    overflow: hidden;
 }
 
-/* HEADER */
-header {
-    background: rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(15px);
-    width: 98%;
-    max-width: 2000px;
-    min-height: 60px;
+/* TOPBAR */
+.topbar {
+    background: #F8F6F1;
+    padding: 15px 25px;
+    border-radius: 12px;
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    border-radius: 0 0 35px 35px;
-    border: 2px solid rgba(255,255,255,0.4);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.25);
-    padding: 0.5rem 3rem;
-    gap: 2rem;
+    align-items: center;
 }
 
-header img {
-    height: 65px;
-    width: 65px;
-    object-fit: cover;
+.topbar h1 {
+    font-size: 26px;
+    font-weight: 600;
 }
+
 
 /* BOTÓN SALIR */
-.regresarbtn {
+.cerrar-sesion {
+    margin-top: 20px;
     background: #ff4b5c;
     border: none;
     color: white;
@@ -53,18 +43,22 @@ header img {
     transition: all 0.3s ease;
 }
 
-.regresarbtn:hover {
+.cerrar-sesion:hover {
     background: #e63946;
-    transform: translateY(-2px);
+    transform: translateY(-2px); /* Pequeño efecto 3D */
     box-shadow: 0 5px 10px rgba(0,0,0,0.2);
 }
-
+.content-area {
+ margin-left: 250px; /* Igual al ancho del sidebar */
+    padding: 20px;
+    width: calc(100% - 250px);
+   
+}
 /* CONTENEDOR PRINCIPAL CENTRADO */
 .admin-box {
-    width: 98%;
+    width: 100%;
     max-width: 2000px;
     min-height: 80vh;
-    margin-top: 2rem;
     padding: 2rem;
     display: flex;
     flex-direction: column;
@@ -72,50 +66,40 @@ header img {
     align-items: center;
     border-radius: 35px;
     border: 2px solid rgba(255,255,255,0.4);
-    background: rgba(255,255,255,0.1);
+    background: #F8F6F1;
     box-shadow: 0 15px 40px rgba(0,0,0,0.25);
 }
 
 
-
-
-
 .titulo-area{
-       margin: 20px;
-       color: #eef4ff;
-       width: 1000px;
-       padding-left: 275px;
-       -webkit-text-stroke: 1px rgb(55, 146, 199);
-       font-size: 20px;
-       
+       margin: 10px;
+       color: #A7D7B8;
+       -webkit-text-stroke: 1px #4E796B;
+       font-size: 18px;     
 }
-
 
 
 /* CONTENEDOR DEL FORMULARIO */
 .registro-box {
     width: 100%;
-    max-width: 500px;
-    background: rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(15px);
+    max-width: 400px;
+    background: #E1EAE5;
     border-radius: 25px;
-    padding: 40px;
-
+    padding: 30px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-
     border: 2px solid rgba(255,255,255,0.4);
     box-shadow: 0 15px 40px rgba(0,0,0,0.05);
 }
 
 /* TÍTULO */
 .registro-box h2 {
-    margin-bottom: 25px;
+    margin-bottom: 10px;
     font-size: 32px;
     font-weight: 600;
-    color: #00394d;
+    color: #4E796B;
     letter-spacing: 1px;
 }
 
@@ -133,36 +117,48 @@ header img {
     padding: 15px;
     border-radius: 12px;
     border: 1px solid #cfd9e6;
-    background: #eef4ff;
+    background: #F8F6F1;
     font-size: 15px;
     outline: none;
     transition: 0.2s ease;
 }
 
 .registro-box input:focus {
-    border-color: #0094b8;
-    background: #e9f5ff;
+    border-color: #06bd8f;
+    background: #F8F6F1;
     box-shadow: 0 0 8px rgba(0,148,184,0.3);
 }
 
 /* BOTÓN */
-.registro-box button {
-    padding: 15px;
+ .btn-group .btnRegistrar {
+    padding: 10px;
     border-radius: 12px;
     border: none;
-    background: linear-gradient(90deg, #0094b8, #006a84);
+    background: #66B2A0;
     color: white;
-    font-size: 18px;
+    font-size: 15px;
     cursor: pointer;
     transition: 0.25s ease;
     font-weight: 600;
     letter-spacing: .5px;
 }
+.btn-group .btnCancelar {
+    background: #f04859;
+        color: white;
+    font-size: 15px;
+    cursor: pointer;
+    transition: 0.25s ease;
+    font-weight: 600;
+    letter-spacing: .5px;
+       padding: 10px;
+    border-radius: 12px;
+    border: none;
+}
 
-.registro-box button:hover {
+button:hover {
     transform: translateY(-3px);
     opacity: 0.9;
-    box-shadow: 0 8px 20px rgba(0,108,132,0.4);
+    box-shadow: 0 8px 20px rgba(11, 231, 147, 0.4);
 }
 
 

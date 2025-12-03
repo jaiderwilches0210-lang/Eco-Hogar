@@ -16,16 +16,9 @@ include("logica/logica-historial.php");
 </head>
 
 <body>
+    <?php include './components/sidebar.php'; ?>
     <header class="main-header">
         <img src="imagenes/logo.png" alt="Logo de la Aplicación" style="border-radius: 50%;">
-            <ul class="nav-menu">
-                <li><a href="inicio.php">INICIO</a></li>
-                <li><a href="registrarProducto.php">REGISTRAR</a></li>
-                <li><a href="verInventario.php">INVENTARIO</a></li>
-                <li><a href="historialMovimientos.php" style="color: #2200fcff;">HISTORIAL</a></li>
-                <li><a href="generarReportes.php">REPORTES</a></li>
-                <li style="margin-left: auto;"><a href="#">+</a></li>
-            </ul>
         <a href="inicio.php" class="regresarbtn">Regresar</a>
     </header>
     

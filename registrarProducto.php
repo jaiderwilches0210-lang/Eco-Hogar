@@ -13,19 +13,20 @@ include("./logica/logica-registrar-prod.php");
         @import url('css/style-registrarProducto.css');
     </style>
 </head>
-
 <body>
+<?php include './components/sidebar.php'; ?>
 
-<header class="main-header">
-    <img src="imagenes/logo.png" alt="Logo" style="border-radius: 50%;">
-    
-    <form action="" method="POST" style="position: absolute; right: 30px; top: 30px; margin: 0;">
-        <button type="submit" name="btnCancelar" class="regresarbtn">Regresar</button>
-    </form>
-</header>
+<main class="content-area">
+<header class="topbar">
+            <h1>Productos</h1>
+            <form action="" method="POST" style="position: absolute; right: 30px; top: 15px; margin: 0;">
+            <button type="submit" name="cerrar-sesion" class="cerrar-sesion">
+                Cerrar Sesión
+            </button>
+        </form>
+        </header> 
 
 <div class="admin-box">
-
     <section class="titulo-area">
         <h1>Registrar Producto</h1>
     </section>
@@ -47,8 +48,8 @@ include("./logica/logica-registrar-prod.php");
             </select>
 
             <div class="btn-group">
-                <button type="submit" name="btnCancelar">Cancelar</button>
-                <button type="submit" name="btnRegistrar">Registrar</button>
+                <button type="submit" class="btnCancelar" name="btnCancelar">Cancelar</button>
+                <button type="submit" class="btnRegistrar" name="btnRegistrar">Registrar</button>
             </div>
 
         </form>

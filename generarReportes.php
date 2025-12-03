@@ -90,6 +90,7 @@ if (isset($_POST["regresarbtn"])) {
 </head>
 
 <body>
+     <?php include './components/sidebar.php'; ?>
     <header class="main-header">
         <img src="imagenes/logo.png" alt="Logo" style="border-radius: 50%;">
         

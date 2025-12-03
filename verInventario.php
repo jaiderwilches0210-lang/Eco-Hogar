@@ -5,7 +5,6 @@ if (isset($_POST["regresarbtn"])) {
     header("Location: inicio.php");
     exit();
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -18,21 +17,19 @@ if (isset($_POST["regresarbtn"])) {
     </style>
     </head>
 
-      <header class="main-header">
-        <img src="imagenes/logo.png" alt="Logo de la Aplicación" style="border-radius: 50%;">
-        
-
-        <a href="inicio.php" class ="regresarbtn">Regresar</a>
-        
-    </header>
 <body>
-    
+    <?php include './components/sidebar.php'; ?>
+
+ <main class="content-area">
+ <header class="topbar">
+        <h1>Inventario</h1>
+        <a href="inicio.php" class ="regresarbtn">Regresar</a>
+    </header>
 
     <div class="admin-box">
-        
 
-<table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%;">
-    <tr style="background-color: #4CAF50; color: white; text-align: left;">
+<table border="1" cellpadding="40" cellspacing="20" style="border-collapse: collapse; width: 100%;">
+    <tr style="background-color: #66B2A0; color: white; text-align: left;">
         <th>ID</th>
         <th>Producto</th>
         <th>Descripción</th>

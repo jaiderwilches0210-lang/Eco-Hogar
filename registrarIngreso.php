@@ -22,19 +22,9 @@ $prev_categoria = $_POST['id_categoria'] ?? '';
     <link rel="stylesheet" href="css/style-ingreso.css"> 
 </head>
 <body>
-    
+    <?php include './components/sidebar.php'; ?>
     <header class="main-header">
-        <img src="imagenes/logo.png" alt="Logo de la Aplicación" style="border-radius: 50%;">
-
-        <nav class="main-nav-menu">
-        <ul>
-            <li><a href="verInventario.php">Inventario</a></li>
-            <li><a href="historialMovimientos.php">Movimientos</a></li>
-            <li><a href="registrarProducto.php">Registrar Producto</a></li>
-            <li><a href="registrarEgreso.php">Egreso/Venta</a></li>
-            <li><a href="generarReportes.php">Reportes</a></li>
-        </ul>
-    </nav>
+    
         <form action="inicio.php" method="POST" style="position: absolute; right: 30px; top: 30px; margin: 0;">
             <button type="submit" name="regresarbtn" class="regresarbtn">Regresar</button>
         </form>

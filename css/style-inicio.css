@@ -11,11 +11,10 @@ body {
     background: #f4f4f4;
 }
 
-
-
 img {
-    height: 65px; /* Ligeramente más grande */
-    width: 65px;
+    margin-left: 30px;
+    height: 80px; /* Ligeramente más grande */
+    width: 140px;
     object-fit: cover;
 }
 
@@ -45,7 +44,7 @@ img {
 .sidebar {
     width: 250px;
     height: 100vh;
-    background: #1b2e21;
+    background: #4E796B;
     padding: 20px;
     position: fixed;
     top:0;
@@ -84,13 +83,15 @@ img {
     font-size: 20px;
     font-weight: 600;
 }
-
+.menu{
+     margin-top: 50px;
+}
 .menu a {
     display: block;
     text-decoration: none;
     color: #ffffffcc;
     padding: 12px 10px;
-    margin-top: 20px;
+    margin-top: 10px;
     border-radius: 8px;
     font-size: 15px;
     transition: 0.2s;
@@ -98,7 +99,7 @@ img {
 
 .menu a:hover,
 .menu a.active {
-    background: #4a7b4f;
+    background: #A7D7B8;
     color: white;
 }
 .content-area {
