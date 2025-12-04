@@ -1,6 +1,11 @@
+
 <?php
-// Importar la lógica (insertar producto)
-include("./logica/logica-registrar-prod.php");
+include_once 'logica/logica-eliminar-prod.php';
+
+$mensaje = $mensaje_resultado ?? '';
+$tipo = $tipo_mensaje ?? '';
+$prev_busqueda = $_POST['consulta_busqueda'] ?? '';
+$prev_categoria = $_POST['id_categoria'] ?? '';
 ?>
 
 <!DOCTYPE html>
@@ -8,53 +13,176 @@ include("./logica/logica-registrar-prod.php");
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registrar Producto</title> 
-    <style>
-        @import url('css/style-registrarProducto.css');
-    </style>
+    <title>Eliminar Producto</title>
+
+    <!-- Aquí cargas tu CSS MODERNO -->
+    <link rel="stylesheet" href="css/eliminarProducto.css">
+
 </head>
 <body>
-    <?php include './components/sidebar.php'; ?>
- <main class="content-area">
-<header class="topbar">
-            <h1>Productos</h1>
-            <form action="" method="POST" style="position: absolute; right: 30px; top: 15px; margin: 0;">
-            <button type="submit" name="cerrar-sesion" class="cerrar-sesion">
-                Cerrar Sesión
-            </button>
+
+<?php include './components/sidebar.php'; ?>
+
+<main class="content-area">
+
+    <!-- TOPBAR -->
+    <header class="topbar">
+        <h1>Productos</h1>
+
+        <form action="inicio.php" method="POST">
+            <button type="submit" class="regresarbtn">Regresar</button>
         </form>
-        </header> 
-<div class="admin-box">
-    <section class="titulo-area">
-        <h1>Eliminar Producto</h1>
-    </section>
+    </header>
 
-    <div class="registro-box">
+    <div class="admin-box">
 
-        <form action="" method="POST">
+        <section class="titulo-area">
+            <h1>Eliminar Producto</h1>
+        </section>
 
-            <input type="text" name="nomPro" placeholder="Nombre del producto">
-            <input type="text" name="desPro" placeholder="Descripción del producto">
-            <input type="number" step="0.01" name="preUni" placeholder="Precio unitario">
-            <input type="number" name="stoAct" placeholder="Cantidad en stock">
+        <!-- Caja general -->
+        <div class="registro-box <?php echo ($producto_seleccionado === null) ? 'wide' : ''; ?>">
 
-            <select name="idCatFK">
-                <option value="">Seleccione una categoría</option>
-                <option value="1">Tecnología</option>
-                <option value="2">Ropa</option>
-                <option value="3">Hogar</option>
-            </select>
+            <!-- Mostrar mensaje -->
+            <?php if (!empty($mensaje)): ?>
+                <div class="resultado-server <?php echo htmlspecialchars($tipo); ?>">
+                    <?php echo htmlspecialchars($mensaje); ?>
+                </div>
+            <?php endif; ?>
 
-            <div class="btn-group">
-                <button type="submit" class="btnCancelar" name="btnCancelar">Cancelar</button>
-                <button type="submit" class="btnRegistrar" name="btnRegistrar">Registrar</button>
-            </div>
+            <!-- SI SE SELECCIONÓ UN PRODUCTO -->
+            <?php if ($producto_seleccionado !== null): ?>
 
-        </form>
+                <h3 class="info-title">Confirmar Eliminación del Producto</h3>
+
+                <form action="eliminarProducto.php" method="POST" class="update-form">
+
+                    <input type="hidden" name="id_producto" value="<?php echo $producto_seleccionado['idPro']; ?>">
+
+                    <div class="form-group-inline">
+                        <div class="form-group">
+                            <label>ID:</label>
+                            <input type="text" value="<?php echo $producto_seleccionado['idPro']; ?>" disabled>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Nombre:</label>
+                            <input type="text" value="<?php echo $producto_seleccionado['nomPro']; ?>" disabled>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Descripción:</label>
+                        <textarea disabled><?php echo $producto_seleccionado['desPro']; ?></textarea>
+                    </div>
+
+                    <div class="form-group-inline">
+                        <div class="form-group">
+                            <label>Precio Unitario:</label>
+                            <input type="text" value="$<?php echo number_format($producto_seleccionado['preUni'], 2); ?>" disabled>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Categoría:</label>
+                            <input type="text" value="<?php echo $producto_seleccionado['nomCat']; ?>" disabled>
+                        </div>
+                    </div>
+
+                    <h3 class="info-title" style="color:#e63946;">
+                        ¿Seguro que deseas eliminar este producto?
+                    </h3>
+
+                    <div class="btn-group">
+                        <a href="eliminarProducto.php" class="btn-cancel">Cancelar</a>
+
+                        <button type="submit" name="confirmar_eliminar" class="btn-submit" style="background:#ff4b5c;">
+                            ELIMINAR DEFINITIVO
+                        </button>
+                    </div>
+
+                </form>
+
+            <!-- SI NO SE HA SELECCIONADO PRODUCTO -->
+            <?php else: ?>
+
+                <p class="search-instruction">Filtre por ID, Nombre o Categoría:</p>
+
+                <form action="eliminarProducto.php" method="POST" class="filter-form">
+
+                    <div class="filter-controls">
+
+                        <div class="form-group search-input">
+                            <input type="text" name="consulta_busqueda" placeholder="ID o Nombre"
+                                value="<?php echo htmlspecialchars($prev_busqueda); ?>">
+                        </div>
+
+                        <div class="form-group category-select">
+                            <select name="id_categoria">
+                                <option value="0">Filtrar por Categoría</option>
+                                <?php foreach ($categorias as $cat): ?>
+                                    <option value="<?php echo $cat['idCat']; ?>"
+                                        <?php echo ($prev_categoria == $cat['idCat']) ? 'selected' : ''; ?>>
+                                        <?php echo $cat['nomCat']; ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+
+                        <button type="submit" name="enviar_filtro" class="btn-search">Buscar</button>
+
+                    </div>
+                </form>
+
+                <?php if (!empty($productos_encontrados)): ?>
+                    <h3 class="results-count">
+                        Resultados (<?php echo count($productos_encontrados); ?>):
+                    </h3>
+
+                    <div class="results-table-container">
+                        <table class="results-table">
+
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Producto</th>
+                                    <th>Categoría</th>
+                                    <th>Stock</th>
+                                    <th>Acción</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <?php foreach ($productos_encontrados as $producto): ?>
+                                    <tr>
+                                        <td><?php echo $producto['idPro']; ?></td>
+                                        <td><?php echo $producto['nomPro']; ?></td>
+                                        <td><?php echo $producto['nomCat']; ?></td>
+                                        <td><?php echo $producto['stoAct']; ?></td>
+
+                                        <td>
+                                            <form action="eliminarProducto.php" method="POST">
+                                                <input type="hidden" name="id_producto"
+                                                    value="<?php echo $producto['idPro']; ?>">
+
+                                                <button type="submit" name="seleccionar_producto" class="btn-select">
+                                                    Seleccionar
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+
+                        </table>
+                    </div>
+                <?php endif; ?>
+
+            <?php endif; ?>
+
+        </div>
 
     </div>
-
-</div>
+</main>
 
 </body>
 </html>
