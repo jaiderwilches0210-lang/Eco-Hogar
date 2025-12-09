@@ -22,16 +22,7 @@ include_once 'logica/logica-reporte-inventario.php';
     <main class="content-area">
      <header class="topbar">
         <h1>Reportes</h1>
-<!-- 
-        <nav class="main-nav-menu">
-        <ul>
-            <li><a href="verInventario.php">Inventario</a></li>
-            <li><a href="historialMovimientos.php">Movimientos</a></li>
-            <li><a href="registrarProducto.php">Registrar Producto</a></li>
-            <li><a href="registrarIngreso.php">Ingreso</a></li> 
-            <li><a href="generarReporteInventario.php">Reportes</a></li> </ul>
-    </nav>
-    -->
+
         <form action="inicio.php" method="POST" style="right: 30px; top: 10px; margin: 0;">
             <button type="submit" name="regresarbtn" class="regresarbtn">Regresar</button>
         </form>

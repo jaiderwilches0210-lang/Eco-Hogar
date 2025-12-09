@@ -19,6 +19,7 @@ $clase_feedback = '';
 
 // 💡 Reemplazar con la variable de sesión real
 $usuario_generador = $_SESSION['nomUsu'] ?? 'Admin General'; 
+date_default_timezone_set('America/Bogota');
 $fecha_reporte = date('Y-m-d H:i:s');
 
 // OBTENER CATEGORÍAS (Para los Selects)

@@ -9,17 +9,60 @@ function getTipoMovimiento($tipo) {
             return 'Egreso';
         case 3:
             return 'Actualización'; 
+        case 4:
+            return 'Eliminación';
         default:
             return 'Desconocido';
     }
 }
 
-$porPagina = 10;
-$sql_count = $conexion->query("SELECT COUNT(idMov) AS total FROM movimientos");
+$nombreAdmin = $_GET['admin_name'] ?? '';
+$tipoMov = $_GET['tipo_mov'] ?? '';
+$fecha = $_GET['filter_date'] ?? '';
+
+$whereClauses = [];
+
+if (!empty($nombreAdmin)) {
+    $nombreAdminEscapado = $conexion->real_escape_string($nombreAdmin);
+    $whereClauses[] = "u.nomUsu LIKE '%$nombreAdminEscapado%'";
+}
+
+if (!empty($tipoMov)) {
+    $tipoMovEntero = (int)$tipoMov;
+    $whereClauses[] = "m.tipMo = $tipoMovEntero";
+}
+
+if (!empty($fecha)) {
+    $fechaEscapada = $conexion->real_escape_string($fecha);
+    $whereClauses[] = "DATE(m.fecMov) = '$fechaEscapada'";
+}
+
+$whereSQL = count($whereClauses) > 0 ? " WHERE " . implode(" AND ", $whereClauses) : "";
+
+$filterParams = '';
+if (!empty($nombreAdmin)) {
+    $filterParams .= "&admin_name=" . urlencode($nombreAdmin);
+}
+if (!empty($tipoMov)) {
+    $filterParams .= "&tipo_mov=" . urlencode($tipoMov);
+}
+if (!empty($fecha)) {
+    $filterParams .= "&filter_date=" . urlencode($fecha);
+}
+
+$porPagina = 7;
+
+$sql_count = "SELECT COUNT(m.idMov) AS total 
+              FROM movimientos m
+              INNER JOIN productos p ON m.idProFK = p.idPro
+              INNER JOIN usuarios u ON m.idUsuFK = u.idUsu
+              $whereSQL";
+
+$resultado_count = $conexion->query($sql_count);
 
 $totalReg = 0;
-if ($sql_count) {
-    $totalReg = $sql_count->fetch_assoc()['total'];
+if ($resultado_count) {
+    $totalReg = $resultado_count->fetch_assoc()['total'];
 }
 
 $totalPaginas = ceil($totalReg / $porPagina);
@@ -35,6 +78,7 @@ if ($totalReg > 0) {
                  FROM movimientos m
                  INNER JOIN productos p ON m.idProFK = p.idPro
                  INNER JOIN usuarios u ON m.idUsuFK = u.idUsu
+                 $whereSQL
                  ORDER BY m.fecMov DESC
                  LIMIT $inicio, $porPagina";
     
@@ -44,9 +88,6 @@ if ($totalReg > 0) {
         $sqlHistorial = $resultadoDatos; 
     } else {
         error_log("Error en consulta de historial: " . $conexion->error);
-        die("Error al cargar los datos: " . $conexion->error); 
     }
 }
-
 ?>
-

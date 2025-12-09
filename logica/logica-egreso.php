@@ -94,14 +94,7 @@ if (isset($_POST['enviar_egreso'])) {
                                VALUES (?, ?, ?, ?, ?, ?)";
             
             if ($stmt_mov = $conexion->prepare($sql_movimiento)) {
-                $stmt_mov->bind_param("iiisis", 
-                    $idPro, 
-                    $idUsuFK, 
-                    $tipo_movimiento, 
-                    $cantidad_egresar, 
-                    $fecha_actual, 
-                    $razon_egreso
-                );
+                $stmt_mov->bind_param("iisiss", $idPro,  $idUsuFK, $tipo_movimiento, $cantidad_egresar, $fecha_actual, $razon_egreso);
                 
                 if (!$stmt_mov->execute()) {
                     throw new Exception("Error al registrar el movimiento: " . $stmt_mov->error); 

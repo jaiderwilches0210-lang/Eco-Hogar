@@ -20,6 +20,8 @@ if ($res_categorias) {
 }
 
 if (isset($_POST['enviar_ingreso'])) {
+
+    date_default_timezone_set('America/Bogota');
     
     $idPro = filter_input(INPUT_POST, 'id_producto', FILTER_VALIDATE_INT);
     $cantidad_ingresar = filter_input(INPUT_POST, 'cantidad_ingresar', FILTER_VALIDATE_INT);
@@ -70,7 +72,7 @@ if (isset($_POST['enviar_ingreso'])) {
             
             if ($stmt_mov = $conexion->prepare($sql_mov)) {
                 $tipo_movimiento = 1; // 1 = Ingreso
-                $stmt_mov->bind_param("iisiss", $idPro, $idUsuFK, $tipo_movimiento, $fecha_actual, $cantidad_ingresar, $razIngre);
+                $stmt_mov->bind_param("iiisis", $idPro, $idUsuFK, $tipo_movimiento, $fecha_actual, $cantidad_ingresar, $razIngre);
                 
                 if (!$stmt_mov->execute()) {
                     throw new Exception("Error al registrar el movimiento: " . $stmt_mov->error);
@@ -113,7 +115,7 @@ if (isset($_POST['seleccionar_producto'])) {
     $idPro = filter_input(INPUT_POST, 'id_producto', FILTER_VALIDATE_INT);
     
     if ($idPro !== false && $idPro > 0) {
-        $sql_select = "SELECT p.idPro, p.desPro, p.stoAct, c.nomCat, p.nomPro 
+       $sql_select = "SELECT p.idPro, p.desPro, p.stoAct, c.nomCat, p.nomPro, p.preUni 
                        FROM productos p 
                        JOIN categoria_producto c ON p.idCatFK = c.idCat 
                        WHERE p.idPro = ?";

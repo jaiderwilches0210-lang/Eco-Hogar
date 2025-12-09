@@ -28,7 +28,7 @@ $prev_categoria = $_POST['id_categoria'] ?? '';
         </form>
 </header> 
     <div class="admin-box">
-          <h2 >Registro Ingreso Stock </h2>
+          <h2 >Registro Ingreso de Productos:  </h2>
         <div class="registro-box <?php echo ($producto_seleccionado === null) ? 'wide' : ''; ?>"> 
 
             <?php if (!empty($mensaje)): ?>
@@ -49,7 +49,7 @@ $prev_categoria = $_POST['id_categoria'] ?? '';
 
                     <div class="form-group-inline">
                          <div class="form-group" style="flex: 1;">
-                            <label for="idPro">ID del Producto:</label>
+                            <label for="idPro">Numero Referencia:</label>
                             <input type="text" id="idPro" value="<?php echo $producto_seleccionado['idPro']; ?>" disabled>
                         </div>
                         <div class="form-group" style="flex: 2;">
@@ -95,12 +95,12 @@ $prev_categoria = $_POST['id_categoria'] ?? '';
             else: 
             ?>
             
-                <p class="search-instruction">Filtre por nombre, ID o categoría para seleccionar el producto a ingresar stock:</p> <br>
+                <p class="search-instruction">Filtre por nombre, Numero de Referencia o categoría para seleccionar el producto a ingresar stock:</p> <br>
 
                 <form action="registrarIngreso.php" method="POST" class="filter-form">
                     <div class="filter-controls">
                         <div class="form-group search-input">
-                            <input type="text" name="consulta_busqueda" placeholder="ID o Nombre del Producto"
+                            <input type="text" name="consulta_busqueda" placeholder="Numero de Referencia o Nombre del Producto"
                                    value="<?php echo htmlspecialchars($prev_busqueda); ?>">
                         </div>
                         
@@ -127,7 +127,7 @@ $prev_categoria = $_POST['id_categoria'] ?? '';
                         <table class="results-table">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
+                                    <th>Numero Referencia</th>
                                     <th>Producto</th>
                                     <th>Categoría</th>
                                     <th>Stock Actual</th>

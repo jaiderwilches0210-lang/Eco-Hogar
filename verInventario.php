@@ -30,7 +30,7 @@ if (isset($_POST["regresarbtn"])) {
 
 <table border="1" cellpadding="40" cellspacing="20" style="border-collapse: collapse; width: 100%;">
     <tr style="background-color: #66B2A0; color: white; text-align: left;">
-        <th>ID</th>
+        <th>Numero Registro</th>
         <th>Producto</th>
         <th>Descripción</th>
         <th>Precio</th>

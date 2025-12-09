@@ -28,7 +28,7 @@ include("./logica/logica-registrar-prod.php");
 
 <div class="admin-box">
     <section class="titulo-area">
-        <h1>Registrar Producto</h1>
+        <h1>Registro de Productos</h1>
     </section>
 
     <div class="registro-box">

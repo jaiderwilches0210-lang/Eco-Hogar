@@ -58,7 +58,7 @@ $prev_categoria = $_POST['id_categoria'] ?? '';
                         
                         <div class="form-group-inline">
                             <div class="form-group" style="flex: 1;">
-                                <label for="idPro">ID del Producto:</label>
+                                <label for="idPro">Referencia Producto:</label>
                                 <input type="text" id="idPro" value="<?php echo htmlspecialchars($producto_seleccionado['idPro'] ?? ''); ?>" disabled>
                             </div>
                             <div class="form-group" style="flex: 2;">
@@ -115,12 +115,12 @@ $prev_categoria = $_POST['id_categoria'] ?? '';
             else: 
             ?>
             
-                <p class="search-instruction">Filtre por nombre, ID o categoría para seleccionar el producto a egresar stock:</p> <br>
+                <p class="search-instruction">Filtre por nombre, Numero Registro o categoría para seleccionar el producto a egresar stock:</p> <br>
 
                 <form action="registrarEgreso.php" method="POST" class="filter-form">
                     <div class="filter-controls">
                         <div class="form-group search-input">
-                            <input type="text" name="consulta_busqueda" placeholder="ID o Nombre del Producto"
+                            <input type="text" name="consulta_busqueda" placeholder="Referencia o Nombre del Producto"
                                         value="<?php echo htmlspecialchars($prev_busqueda); ?>">
                         </div>
                         
@@ -147,7 +147,7 @@ $prev_categoria = $_POST['id_categoria'] ?? '';
                         <table class="results-table">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
+                                    <th>Nº Registro</th>
                                     <th>Producto</th>
                                     <th>Categoría</th>
                                     <th>Stock Actual</th>
