@@ -1,55 +1,36 @@
 <!-- componentes/sidebar.php -->
 <style>
-        @import url('css/style-inicio.css');
+        @import url('css/sidebar.css');
     </style> 
+
 <div class="sidebar">
+      <div class="sidebar-header">
         <img src="imagenes/logo.png" alt="Logo de la Aplicación" style="border-radius: 10px;">
-        <nav class="menu">
-            <ul>
-                <li><a 
-                    href="verInventario.php"
-                    class="button-a"
-                >Ver Inventario</a></li>
+    </div>
+        <nav class="sidebar-nav">
+             <ul class="ul">
+             <li class="li"><a href="inicio.php">Home</a></li>
 
-                <li><a
-                    href="stock.php"
-                    class="button-a"
-                    >Stock</a></li>
-                
-                <li><a
-                    href="registrarProducto.php"
-                    class="button-a"
-                >Registrar Producto</a></li>
+             <p class="section-title"> GESTIÓN DE INVENTARIO</p>
 
-                <li><a
-                    href="eliminarProducto.php" 
-                    class="button-a"
-                >Eliminar Producto</a></li>
+                <li class="li"><a href="verInventario.php"><i class="icon">&#128202;</i>Ver Inventario</a></li>  
+            
+                 <p class="section-title">PRODUCTOS</p>
+                 <li class="li"><a href="eliminarProducto.php">Listar Productos</a></li>
+                 <li class="li"><a href="registrarProducto.php"> Registrar Producto</a></li>
+                 
                 
-                <li><a 
-                    href="registrarIngreso.php" 
-                    class="button-a"
-                >Registrar Ingreso</a></li>
+                 <p class="section-title">MOVIMIENTOS</p>
+                <li class="li"><a href="registrarIngreso.php" class="a"> Registrar Ingreso</a></li>
                 
-                <li><a 
-                    href="registrarEgreso.php" 
-                    class="button-a"
-                >Registrar Egreso</a></li>
+                <li class="li"><a href="registrarEgreso.php"class="a"> Registrar Egreso</a></li>
                 
-                <li><a 
-                    href="historialMovimientos.php" 
-                    class="button-a"
-                >Historial Movimientos</a></li>
-                
-                <li><a 
-                    href="generarReportes.php" 
-                    class="button-a"
-                >Generar Reportes</a></li>
+                <li class="li"><a href="historialMovimientos.php" class="a"> Historial Movimientos</a></li>
+
+                <p class="section-title">REPORTES</p>
+            
+            <li class="li"><a href="generarReporteInventario.php" class="a">📑 Generar Reporte Inventario</a></li>
             </ul>
-            <li><a 
-                    href="generarReporteInventario.php" 
-                    class="button-a"
-                >Generar Reporte Inventario</a></li>
-            </ul>
+            
         </nav>
   </div>

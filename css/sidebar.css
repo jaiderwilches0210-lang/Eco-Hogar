@@ -1,0 +1,90 @@
+/* SIDEBAR GENERAL */
+/* RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+  display: flex;
+    background: #f4f4f4;
+}
+
+img {
+    margin-left: 30px;
+    height: 80px; /* Ligeramente más grande */
+    width: 140px;
+    object-fit: cover;
+}
+
+.sidebar {
+    width: 260px;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #1B4332; /* Verde oscuro profesional */
+    color: white;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    overflow-y: auto;
+}
+
+/* ENCABEZADO */
+.sidebar-header h2 {
+    font-size: 8.8rem;
+    margin: 0;
+    font-weight: 700;
+}
+
+.role {
+    font-size: 0.9rem;
+    color: #B7E4C7; /* Verde claro */
+}
+
+/* LISTADO DEL MENÚ */
+.sidebar-nav .ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 25px;
+}
+
+.sidebar-nav .ul .li {
+    margin: 10px 0;
+}
+
+.sidebar-nav .ul .li a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    padding: 8px;
+    border-radius: 8px;
+    transition: 0.2s ease-in-out;
+}
+
+/* ICONOS GENERALES */
+.icon {
+    font-size: 15px;
+}
+
+/* EFECTO HOVER */
+.sidebar-nav ul li a:hover {
+    background-color: #40916C; /* Verde medio */
+}
+
+/* TITULOS DE SECCIÓN */
+.section-title {
+    margin-top: 20px;
+    font-size: 0.8rem;
+    color: #95D5B2;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: bold;
+}
+
+

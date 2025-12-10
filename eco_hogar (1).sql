@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3307
--- Tiempo de generación: 09-12-2025 a las 02:36:27
+-- Tiempo de generación: 10-12-2025 a las 18:24:12
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.0.30
 
@@ -40,6 +40,25 @@ INSERT INTO `categoria_producto` (`idCat`, `nomCat`) VALUES
 (1, 'Tecnología'),
 (2, 'Ropa'),
 (3, 'Hogar');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `estado_producto`
+--
+
+CREATE TABLE `estado_producto` (
+  `idEst` int(3) NOT NULL,
+  `nomEst` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `estado_producto`
+--
+
+INSERT INTO `estado_producto` (`idEst`, `nomEst`) VALUES
+(1, 'Activo'),
+(2, 'Inactivo');
 
 -- --------------------------------------------------------
 
@@ -117,9 +136,10 @@ CREATE TABLE `productos` (
 --
 
 INSERT INTO `productos` (`idPro`, `idCatFK`, `nomPro`, `desPro`, `preUni`, `preVen`, `FecReg`, `stoAct`, `umbMinSo`, `idEstProEnumFK`) VALUES
-(1, 3, 'SALA', 'comoda sala de star eco amigable', 200000, 0, '0000-00-00', 118, 0, 0),
-(3, 3, 'Mueble', 'comoda sala de star eco amigable', 20007, 0, '0000-00-00', 20, 0, 0),
-(4, 3, 'SALA', 'marina', 20, 0, '0000-00-00', 22, 0, 0);
+(1, 3, 'SALA', 'comoda sala de star eco amigable', 200000, 0, '0000-00-00', 118, 5, 1),
+(3, 3, 'Mueble', 'comoda sala de star eco amigable', 20007, 24234, '2025-12-03', 20, 5, 1),
+(4, 3, 'Sala Marina', 'Sala Marina', 20, 0, '2025-12-10', 22, 5, 1),
+(5, 2, 'Camisa Polo lumina', 'cómoda camisa eco amigable', 123123, 0, '2025-12-02', 23, 5, 1);
 
 -- --------------------------------------------------------
 
@@ -173,6 +193,12 @@ ALTER TABLE `categoria_producto`
   ADD PRIMARY KEY (`idCat`);
 
 --
+-- Indices de la tabla `estado_producto`
+--
+ALTER TABLE `estado_producto`
+  ADD PRIMARY KEY (`idEst`);
+
+--
 -- Indices de la tabla `movimientos`
 --
 ALTER TABLE `movimientos`
@@ -185,7 +211,8 @@ ALTER TABLE `movimientos`
 --
 ALTER TABLE `productos`
   ADD PRIMARY KEY (`idPro`),
-  ADD KEY `produ_fk` (`idCatFK`);
+  ADD KEY `produ_fk` (`idCatFK`),
+  ADD KEY `fk_estado_producto` (`idEstProEnumFK`);
 
 --
 -- Indices de la tabla `rol`
@@ -211,6 +238,12 @@ ALTER TABLE `categoria_producto`
   MODIFY `idCat` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT de la tabla `estado_producto`
+--
+ALTER TABLE `estado_producto`
+  MODIFY `idEst` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT de la tabla `movimientos`
 --
 ALTER TABLE `movimientos`
@@ -220,7 +253,7 @@ ALTER TABLE `movimientos`
 -- AUTO_INCREMENT de la tabla `productos`
 --
 ALTER TABLE `productos`
-  MODIFY `idPro` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `idPro` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `rol`
@@ -249,6 +282,7 @@ ALTER TABLE `movimientos`
 -- Filtros para la tabla `productos`
 --
 ALTER TABLE `productos`
+  ADD CONSTRAINT `fk_estado_producto` FOREIGN KEY (`idEstProEnumFK`) REFERENCES `estado_producto` (`idEst`),
   ADD CONSTRAINT `produ_fk` FOREIGN KEY (`idCatFK`) REFERENCES `categoria_producto` (`idCat`);
 
 --

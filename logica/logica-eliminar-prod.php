@@ -81,7 +81,7 @@ $consulta = trim($_POST['consulta_busqueda'] ?? '');
 $id_categoria = filter_input(INPUT_POST, 'id_categoria', FILTER_VALIDATE_INT);
 $id_categoria = $id_categoria === false ? 0 : ($id_categoria ?? 0);
 
-$sql = "SELECT p.idPro, p.nomPro, p.desPro, p.stoAct, p.idEstProEnumFK, c.nomCat
+$sql = "SELECT p.idPro, p.nomPro, p.desPro, p.stoAct, p.preUni, p.idEstProEnumFK, c.nomCat
         FROM productos p
         JOIN categoria_producto c ON p.idCatFK = c.idCat
         WHERE 1=1";

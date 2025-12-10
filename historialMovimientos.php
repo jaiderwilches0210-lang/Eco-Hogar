@@ -23,9 +23,11 @@ if (isset($_POST["regresarbtn"])) {
  <main class="content-area">
  <header class="topbar">
   <h1>Historial de Movimientos</h1>
+  <form action="login.php" method="POST">
   <button type="button" class="regresarbtn" style="margin-left: 10px;">
                 Cerrar Sesión
-            </button> 
+       </button> 
+    </form>
   </header>
 
  <div class="admin-box"> 

@@ -257,7 +257,7 @@ body {
     padding: 8px 12px;
     border-radius: 6px;
     border: none;
-    background: #45996b;
+    background: #759945;
     color: white;
     font-size: 13px;
     cursor: pointer;
@@ -269,6 +269,17 @@ body {
     background: #35837f;
 }
 
+.btn-update {
+    padding:6px 10px;
+    background-color: #ccb758;
+    color:white;
+    border:none;
+    cursor:pointer;
+}
+
+.btn-update:hover {
+    background-color: #45a049;
+}
 /* ----------------- BOTONES GENERALES ----------------- */
 .btn-group {
     width: 100%;

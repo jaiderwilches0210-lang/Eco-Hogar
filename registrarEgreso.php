@@ -22,7 +22,9 @@ $prev_categoria = $_POST['id_categoria'] ?? '';
 </head>
 <body>
     <?php include './components/sidebar.php'; ?>
+
     <main class="content-area">
+
     <header  class="topbar">
         <h1>Egresos</h1>
         <form action="inicio.php" method="POST" style="position: absolute; right: 30px; top: 30px; margin: 0;">

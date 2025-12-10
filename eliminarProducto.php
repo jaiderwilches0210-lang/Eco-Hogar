@@ -41,7 +41,7 @@ $prev_categoria = $_POST['id_categoria'] ?? 0;
 
     <div class="admin-box">
         <section class="titulo-area">
-            <h1>Eliminar / Inactivar Producto</h1>
+            <h1>Productos Activo e Inactivos</h1>
         </section>
 
         <div class="registro-box <?php echo ($producto_seleccionado === null) ? 'wide' : ''; ?>">
@@ -98,6 +98,7 @@ $prev_categoria = $_POST['id_categoria'] ?? 0;
                             INACTIVAR PRODUCTO
                         </button>
                     </div>
+                    
                 </form>
 
             <!-- Si no hay producto seleccionado, mostramos buscador y lista -->
@@ -136,7 +137,10 @@ $prev_categoria = $_POST['id_categoria'] ?? 0;
                                     <th>ID</th>
                                     <th>Producto</th>
                                     <th>Categoría</th>
+                                    <th>Descripción</th>
                                     <th>Stock</th>
+                                    <th>Precio</th>
+                                    <th>Actualizar</th>
                                     <th>Estado</th>
                                     <th>Acción</th>
                                 </tr>
@@ -148,8 +152,16 @@ $prev_categoria = $_POST['id_categoria'] ?? 0;
                                         <td><?php echo htmlspecialchars($producto['idPro']); ?></td>
                                         <td><?php echo htmlspecialchars($producto['nomPro']); ?></td>
                                         <td><?php echo htmlspecialchars($producto['nomCat']); ?></td>
-                                        <td><?php echo htmlspecialchars($producto['stoAct']); ?></td>
-
+                                        <td><?php echo htmlspecialchars($producto['desPro']); ?></td>
+                                         <td><?php echo htmlspecialchars($producto['stoAct']); ?></td>
+                                        <td><?php echo htmlspecialchars($producto['preUni']); ?></td>
+     <td>  
+        
+    <form action="actualizarProducto.php" method="POST" style="display:inline; margin-left:5px;">
+        <input type="hidden" name="id_producto" value="<?php echo htmlspecialchars($producto['idPro']); ?>">
+        <button type="submit" class="btn-update">Actualizar</button>
+    </form>
+</td>
                                         <td>
                                             <?php
                                                 echo ($producto['idEstProEnumFK'] == 1)
@@ -164,6 +176,8 @@ $prev_categoria = $_POST['id_categoria'] ?? 0;
                                                 <button type="submit" name="seleccionar_producto" class="btn-select">Seleccionar</button>
                                             </form>
                                         </td>
+
+                                        
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>

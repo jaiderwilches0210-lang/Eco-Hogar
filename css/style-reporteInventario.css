@@ -130,31 +130,6 @@ header {
 }
 
 
-.main-nav-menu a {
-   
-    font-family: 'Montserrat', sans-serif;
-    text-decoration: none;
-    color: #00394d; 
-    font-size: 15px; 
-    font-weight: 600; 
-    padding: 8px 12px;
-    border-radius: 6px; 
-    transition: all 0.2s ease-out; 
-    background: transparent;
-    text-shadow: none; 
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
-
-
-.main-nav-menu a:hover {
-    background: #eef4ff; 
-    color: #006a84; 
-    box-shadow: none;
-    transform: none; 
-    cursor: pointer;
-}
 
 
 .registro-box.wide {

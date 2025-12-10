@@ -9,25 +9,28 @@ include("./logica/logica-registrar-prod.php");
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registrar Producto</title> 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <style>
         @import url('css/style-registrarProducto.css');
     </style>
 </head>
-
 <body>
+<?php include './components/sidebar.php'; ?>
 
-<header class="main-header">
-    <img src="imagenes/logo.png" alt="Logo" style="border-radius: 50%;">
-    
-    <form action="" method="POST" style="position: absolute; right: 30px; top: 30px; margin: 0;">
-        <button type="submit" name="btnCancelar" class="regresarbtn">Regresar</button>
-    </form>
-</header>
+<main class="content-area">
+<header class="topbar">
+            <h1>Productos</h1>
+            <form action="" method="POST" style="position: absolute; right: 30px; top: 15px; margin: 0;">
+            <button type="submit" name="cerrar-sesion" class="cerrar-sesion">
+                Cerrar Sesión
+            </button>
+        </form>
+        </header> 
 
 <div class="admin-box">
-
     <section class="titulo-area">
-        <h1>Registrar Producto</h1>
+        <h1>Registro de Productos</h1>
     </section>
 
     <div class="registro-box">
@@ -47,8 +50,8 @@ include("./logica/logica-registrar-prod.php");
             </select>
 
             <div class="btn-group">
-                <button type="submit" name="btnCancelar">Cancelar</button>
-                <button type="submit" name="btnRegistrar">Registrar</button>
+                <button type="submit" class="btnCancelar" name="btnCancelar">Cancelar</button>
+                <button type="submit" class="btnRegistrar" name="btnRegistrar">Registrar</button>
             </div>
 
         </form>
