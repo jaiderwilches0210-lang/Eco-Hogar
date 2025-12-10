@@ -1,0 +1,270 @@
+/* ========================================= */
+/* 1. RESET Y ESTRUCTURA GENERAL */
+/* ========================================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    /* Gradiente de fondo vibrante (Original) */
+    background: linear-gradient(135deg, #00f8b6 0%, #006e93 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+}
+
+/* Encabezado Principal */
+header {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(15px);
+    width: 98%;
+    max-width: 2000px;
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 0 0 35px 35px;
+    border: 2px solid rgba(255,255,255,0.4);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    padding: 0.5rem 3rem;
+    gap: 2rem;
+}
+
+header img {
+    height: 65px;
+    width: 65px;
+    object-fit: cover;
+}
+
+/* Área de Contenido (Mueve el contenido a la derecha del Sidebar) */
+.content-area {
+    margin-left: 250px; /* Igual al ancho del sidebar */
+    padding: 20px;
+    width: calc(100% - 250px);
+}
+
+/* Título de Área (Ajustado) */
+.titulo-area {
+    margin: 20px;
+    color: #A7D7B8;
+    width: 100%; /* Ajustado para ocupar el 100% del contenedor */
+    max-width: 1000px; 
+    padding-left: 0; /* Centramos el manejo del padding en el contenedor */
+    text-align: center;
+    -webkit-text-stroke: 1px rgb(55, 146, 199);
+    font-size: 20px;
+}
+
+/* ========================================= */
+/* 2. BOTONES */
+/* ========================================= */
+
+/* BOTÓN REGRESAR / SALIR */
+.regresarbtn {
+    background: #ff4b5c;
+    border: none;
+    color: white;
+    padding: 10px 35px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+    text-decoration: none; /* Asegura que se vea como botón si es un <a> */
+    display: inline-block;
+}
+
+.regresarbtn:hover {
+    background: #e63946;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+}
+
+/* BOTÓN DE FILTRAR */
+.btn-filter {
+    padding: 12px 20px;
+    background: linear-gradient(135deg, #4CAF50, #2e7d32);
+    color: white;
+    border: none;
+    border-radius: 14px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.3s ease;
+}
+
+.btn-filter:hover {
+    background: linear-gradient(135deg, #43a047, #1b5e20);
+    transform: translateY(-2px);
+}
+
+/* ========================================= */
+/* 3. CONTENEDORES Y TABLA */
+/* ========================================= */
+
+/* CONTENEDOR PRINCIPAL CENTRADO (admin-box) */
+.admin-box {
+    width: 98%;
+    max-width: 2000px;
+    min-height: 80vh;
+    margin-top: 2rem;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-bottom: 40px;
+    align-items: center;
+    border-radius: 35px;
+    border: 2px solid rgba(255,255,255,0.4);
+    background: rgba(255,255,255,0.1);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+}
+
+/* Estilos de la tabla */
+table {
+    /* El padding original de 80px era excesivo, lo ajustamos */
+    padding: 20px; 
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    justify-self: top;
+    align-self: flex-start;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+}
+
+table th {
+    padding: 15px;
+    /* Estilo del encabezado de la tabla, tomado del HTML original */
+    background-color: #66B2A0; 
+    color: white; 
+    text-align: left;
+}
+
+table td {
+    padding: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3); /* Separación visual entre filas */
+    background-color: rgba(255, 255, 255, 0.7); /* Fondo más blanco para las celdas */
+    color: #333;
+}
+
+/* ========================================= */
+/* 4. FUNCIONALIDAD STOCK BAJO */
+/* ========================================= */
+
+/* Estilo para la fila completa cuando el stock es menor al umbral */
+.stock-bajo {
+    background-color: #fdd8d8 !important; /* Fondo rojo claro para toda la fila */
+    transition: background-color 0.3s ease;
+    /* Opcional: añade un borde izquierdo llamativo */
+    border-left: 5px solid #d32f2f; 
+}
+
+/* Estilo para resaltar específicamente la celda de Stock */
+.stock-bajo-celda {
+    color: #d32f2f; /* Texto en color rojo oscuro */
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+/* ========================================= */
+/* 5. FILTROS Y PAGINACIÓN */
+/* ========================================= */
+
+/* Panel de Filtros */
+.historial-filters {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.18);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    padding: 20px 30px;
+    border-radius: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+    margin-bottom: 25px;
+    gap: 40px;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    width: 22%; 
+}
+
+.filter-group label {
+    font-weight: bold;
+    font-size: 15px;
+    color: #003b3b;
+    margin-bottom: 6px;
+}
+
+.filter-group input,
+.filter-group select {
+    width: 100%;
+    padding: 10px 14px;
+    border-radius: 12px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    outline: none;
+    transition: 0.3s ease;
+}
+
+.filter-group input:focus,
+.filter-group select:focus {
+    border-color: #4E796B;
+    box-shadow: 0 0 8px rgba(76, 175, 80, 0.4);
+}
+
+/* CONTENEDOR DE PAGINACIÓN */
+.pagination {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 25px;
+    padding: 10px 20px;
+    background: rgba(255,255,255,0.3);
+    border-radius: 20px;
+    box-shadow: 0 6px 14px rgba(0,0,0,0.25);
+}
+
+/* BOTONES DE PAGINACIÓN */
+.pagination a,
+.pagination span {
+    padding: 8px 14px;
+    border-radius: 10px;
+    font-size: 17px;
+    font-weight: 600;
+    text-decoration: none;
+    color: #0a2a5a;
+    border: 2px solid #0a2a5a;
+    transition: 0.25s;
+}
+
+/* Hover */
+.pagination a:hover {
+    background: #0a2a5a;
+    color: white;
+}
+
+/* Página actual */
+.pagination .active {
+    background: #ff8c22;
+    color: white !important;
+    border-color: #ff8c22;
+}
+
+/* Deshabilitado */
+.pagination .disabled {
+    opacity: 0.4;
+    pointer-events: none;
+}

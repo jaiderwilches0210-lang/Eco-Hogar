@@ -5,6 +5,11 @@ if (isset($_POST["regresarbtn"])) {
     header("Location: inicio.php");
     exit();
 }
+$filter_params = '';
+if (isset($adminName) && !empty($adminName)) $filter_params .= "&admin_name=" . urlencode($adminName);
+if (isset($tipoMov) && !empty($tipoMov)) $filter_params .= "&tipo_mov=" . urlencode($tipoMov);
+if (isset($filterDate) && !empty($filterDate)) $filter_params .= "&filter_date=" . urlencode($filterDate);
+
 ?>
 
 <!DOCTYPE html>
@@ -29,44 +34,39 @@ if (isset($_POST["regresarbtn"])) {
                 Cerrar Sesión
             </button> 
     </header>
-<!-- La primera palabra de cada párrafo está en negrita 
-    <ul class="nav-menu">
-        <li><a href="inicio.php">INICIO</a></li>
-        <li><a href="registrarProducto.php">REGISTRAR</a></li>
-        <li><a href="verInventario.php">INVENTARIO</a></li>
-        <li><a href="historialMovimientos.php">HISTORIAL</a></li>
-        <li><a href="generarReportes.php" style="color: #4CAF50;">REPORTES</a></li>
-    </ul>
--->
+    
     <div class="admin-box">
-        <div class="historial-filters">
-            <div class="filter-group">
-                <label for="admin_name">Filtrar por Nombre Administrador:</label>
-                <input type="text" id="admin_name" name="admin_name" placeholder="Nombre Admin">
-            </div>
 
-            <div class="filter-group">
-                <label for="tipo_mov">Filtrar por Tipo:</label>
-                <select id="tipo_mov" name="tipo_mov">
-                    <option value="">Todos</option>
-                    <option value="1">Ingreso</option>
-                    <option value="2">Egreso</option>
-                    <option value="3">Actualización</option>
-                    <option value="4">Eliminación</option>
-                </select>
-            </div>
-            
-            <div class="filter-group">
-                <label for="filter_date">Filtrar por Fecha:</label>
-                <input type="date" id="filter_date" name="filter_date">
-            </div>
-            
-            <button type="button" class="btn-filter" style="padding: 5px 10px; background-color: #4CAF50; color: white; border: none; border-radius: 3px; cursor: pointer;">
-                Filtrar
-            </button>
-        </div>
+    <form method="GET" class="historial-filters">
+    <div class="filter-group">
+        <label for="admin_name">Filtrar por Nombre Administrador:</label>
+        <input type="text" id="admin_name" name="admin_name" placeholder="Nombre Admin"
+            value="<?php echo htmlspecialchars($adminName); ?>">
+    </div>
 
-               <table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%;">
+    <div class="filter-group">
+        <label for="tipo_mov">Filtrar por Tipo:</label>
+        <select id="tipo_mov" name="tipo_mov">
+            <option value="" <?php echo $tipoMov == '' ? 'selected' : ''; ?>>Todos</option>
+            <option value="1" <?php echo $tipoMov == '1' ? 'selected' : ''; ?>>Ingreso</option>
+            <option value="2" <?php echo $tipoMov == '2' ? 'selected' : ''; ?>>Egreso</option>
+            <option value="3" <?php echo $tipoMov == '3' ? 'selected' : ''; ?>>Actualización</option>
+            <option value="4" <?php echo $tipoMov == '4' ? 'selected' : ''; ?>>Eliminación</option>
+        </select>
+    </div>
+    
+    <div class="filter-group">
+        <label for="filter_date">Filtrar por Fecha:</label>
+        <input type="date" id="filter_date" name="filter_date"
+            value="<?php echo htmlspecialchars($filterDate); ?>">
+    </div>
+    
+    <button type="submit" class="btn-filter" style="padding: 5px 10px; background-color: #4CAF50; color: white; border: none; border-radius: 3px; cursor: pointer;">
+        Filtrar
+    </button>
+    </form>
+
+            <table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%;">
             <tr style="background: linear-gradient(135deg, #43a047, #1b5e20); color: white; text-align: left;">
                         <th>ID M</th>
                         <th>Usuario</th>
@@ -103,7 +103,7 @@ if (isset($_POST["regresarbtn"])) {
 
                 <div class="pagination">
                     <?php if (isset($pagina) && $pagina > 1): ?>
-                        <a href="?pag=<?php echo $pagina - 1; ?>">&#10094;</a>
+                        <a href="?pag=<?php echo $pagina - 1; ?><?php echo $filter_params; ?>">&#10094;</a>
                     <?php else: ?>
                         <span class="disabled">&#10094;</span>
                     <?php endif; ?>
@@ -112,71 +112,36 @@ if (isset($_POST["regresarbtn"])) {
                     if (isset($totalPaginas)) {
                         for ($i = 1; $i <= $totalPaginas; $i++): 
                     ?>
-                        <?php if ($i == $pagina): ?>
-                            <span class="active"><?php echo $i; ?></span>
-                        <?php else: ?>
-                            <a href="?pag=<?php echo $i; ?>"><?php echo $i; ?></a>
-                        <?php endif; ?>
+                    <?php if ($i == $pagina): ?>
+                        <span class="active"><?php echo $i; ?></span>
+                    <?php else: ?>
+                        <a href="?pag=<?php echo $i; ?><?php echo $filter_params; ?>"><?php echo $i; ?></a>
+                    <?php endif; ?>
                     <?php 
                         endfor;
                     } 
                     ?>
 
                     <?php if (isset($pagina, $totalPaginas) && $pagina < $totalPaginas): ?>
-                        <a href="?pag=<?php echo $pagina + 1; ?>">&#10095;</a>
+                        <a href="?pag=<?php echo $pagina + 1; ?><?php echo $filter_params; ?>">&#10095;</a>
                     <?php else: ?>
                         <span class="disabled">&#10095;</span>
                     <?php endif; ?>
                 </div>
+
+                    <?php if (isset($pagina, $totalPaginas) && $pagina < $totalPaginas): ?>
+                        <a href="?pag=<?php echo $pagina + 1; ?><?php echo $filter_params; ?>">&#10095;</a>
+                    <?php else: ?>
+                        <span class="disabled">&#10095;</span>
+                    <?php endif; ?>
                 
-            </div>
-            
-            
-            <div class="filters-panel">
-                <h4>Filtros</h4>
-                <form action="generarReportes.php" method="GET">
-                    
-                    <div class="filter-group">
-                        <label for="tipo_reporte">Tipo de Reporte</label>
-                        <select id="tipo_reporte" name="tipo_reporte">
-                            <option value="1">Movimientos (Egresos/Ingresos)</option>
-                            <option value="2">Stock Actual</option>
-                            <option value="3">Productos por Categoría</option>
-                        </select>
-                    </div>
-
-                    <div class="filter-group">
-                        <label for="formato_descarga">Formato de Descarga</label>
-                        <select id="formato_descarga" name="formato_descarga">
-                            <option value="excel">Excel</option>
-                            <option value="pdf">PDF</option>
-                        </select>
-                    </div>
-
-                    <div class="filter-group">
-                        <label for="fecha_generacion">Fecha de Generación</label>
-                        <input type="date" id="fecha_generacion" name="fecha_generacion" value="<?php echo date('Y-m-d'); ?>" disabled>
-                    </div>
-                    
-                    <div class="filter-group">
-                        <label for="nombre_administrador">Nombre Administrador</label>
-                        <input type="text" id="nombre_administrador" name="nombre_administrador" value="Nombre Admi" disabled>
-                    </div>
-
-                    <button type="submit" name="generarbtn" style="background-color: #4CAF50; color: white; padding: 10px; border: none; border-radius: 4px; width: 100%; cursor: pointer;">
-                        Generar
-                    </button>
-                    
-                </form>
-            </div>
-        </div>
-     
+                
         <div class="action-buttons">
             
                 <button type="button" style="background-color: #337ab7; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer;">
                     Exportar en Excel
                 </button>
-           
+            
                 <button type="button" style="background-color: #f0ad4e; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer;">
                     Imprimir Reporte
                 </button>

@@ -26,16 +26,16 @@ include("logica/logicaInicio.php");
             </button>
         </form>
                 <div class="palette">
-                    <div class="color"><img src="imagenes/imagen1.jfif" alt="Imagen Decorativa 1"></div>
-                    <div class="color"><img src="imagenes/imagen2.jfif" alt="Imagen Decorativa 2"></div>
-                    <div class="color"><img src="imagenes/imagen3.jfif" alt="Imagen Decorativa 3"></div>
-                    <div class="color"><img src="imagenes/imagen4.jfif" alt="Imagen Decorativa 4"></div>
-                    <div class="color"><img src="imagenes/imagen5.jfif" alt="Imagen Decorativa 5"></div>
-                    <div class="color"><img src="imagenes/imagen6.jfif" alt="Imagen Decorativa 6"></div>
-                    <div class="color"><img src="imagenes/imagen7.jfif" alt="Imagen Decorativa 5"></div>
-                    <div class="color"><img src="imagenes/imagen8.jfif" alt="Imagen Decorativa 6"></div>
-                    <div class="color"><img src="imagenesimagen9.jfif" alt="Imagen Decorativa 5"></div>
-                    <div class="color"><img src="imagenes/imagen10.jfif" alt="Imagen Decorativa 6"></div>  
+                    <div class="color"><img src="imagenes/imagen1.jpeg" alt="Imagen Decorativa 1"></div>
+                    <div class="color"><img src="imagenes/imagen2.jpeg" alt="Imagen Decorativa 2"></div>
+                    <div class="color"><img src="imagenes/imagen3.jpeg" alt="Imagen Decorativa 3"></div>
+                    <div class="color"><img src="imagenes/imagen4.jpeg" alt="Imagen Decorativa 4"></div>
+                    <div class="color"><img src="imagenes/imagen5.jpeg" alt="Imagen Decorativa 5"></div>
+                    <div class="color"><img src="imagenes/imagen6.jpeg" alt="Imagen Decorativa 6"></div>
+                    <div class="color"><img src="imagenes/imagen7.jpeg" alt="Imagen Decorativa 5"></div>
+                    <div class="color"><img src="imagenes/imagen8.jpeg" alt="Imagen Decorativa 6"></div>
+                    <div class="color"><img src="imagenes/imagen9.jpeg" alt="Imagen Decorativa 5"></div>
+                    <div class="color"><img src="imagenes/imagen10.jpeg" alt="Imagen Decorativa 6"></div>  
             </div>
         </main>
         

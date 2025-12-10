@@ -3,13 +3,18 @@
         @import url('css/style-inicio.css');
     </style> 
 <div class="sidebar">
-       <img src="imagenes/logo.png" alt="Logo de la Aplicación" style="border-radius: 10px;">
+        <img src="imagenes/logo.png" alt="Logo de la Aplicación" style="border-radius: 10px;">
         <nav class="menu">
             <ul>
                 <li><a 
                     href="verInventario.php"
                     class="button-a"
                 >Ver Inventario</a></li>
+
+                <li><a
+                    href="stock.php"
+                    class="button-a"
+                    >Stock</a></li>
                 
                 <li><a
                     href="registrarProducto.php"

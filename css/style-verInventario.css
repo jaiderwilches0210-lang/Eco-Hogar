@@ -288,3 +288,67 @@ table td{
     opacity: 0.4;
     pointer-events: none;
 }
+
+
+.filtros {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    /* Estilos de efecto de cristal */
+    background: rgba(255, 255, 255, 0.18);
+    backdrop-filter: blur(18px) ;
+    -webkit-backdrop-filter: blur(18px) ;
+    padding: 20px 30px;
+    border-radius: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+    margin-bottom: 25px;
+    gap: 40px; /* Separación entre elementos */
+}
+
+/* Aplicar el estilo de .filter-group a los inputs/selects del formulario .filtros */
+.filtros input[type="text"],
+.filtros select {
+    width: 25%; /* Ajuste para que encajen mejor */
+    padding: 10px 14px;
+    border-radius: 12px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    outline: none;
+    transition: 0.3s ease;
+}
+
+.filtros input[type="text"]:focus,
+.filtros select:focus {
+    border-color: #4E796B;
+    box-shadow: 0 0 8px rgba(76, 175, 80, 0.4);
+}
+
+/* Estilo para el botón de filtro */
+.filtros button[type="submit"] {
+    padding: 12px 20px;
+    background: linear-gradient(135deg, #4CAF50, #2e7d32);
+    color: white;
+    border: none;
+    border-radius: 14px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.3s ease;
+    /* Ajuste para que se alinee con los inputs */
+    align-self: flex-end; 
+    margin-bottom: 0;
+}
+
+.filtros button[type="submit"]:hover {
+    background: linear-gradient(135deg, #43a047, #1b5e20);
+    transform: translateY(-2px);
+}
+
+/* Ajustes a la tabla para alineación */
+table {
+    /* Eliminar padding exagerado para que la tabla ocupe su ancho real */
+    padding: 0; 
+    width: 100%;
+    /* ... resto de estilos de tabla ... */
+}
