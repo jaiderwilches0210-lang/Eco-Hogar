@@ -22,12 +22,29 @@ if (isset($_POST["btnRegistrar"])) {
         $stockActivo = $_POST["stoAct"];
         $categoriaProducto = $_POST["idCatFK"];
 
+        // Valores calculados / automáticos
+        $precioVenta = $precioUnitario;  // puedes cambiarlo si deseas
+        $fechaRegistro = date("Y-m-d");
+        $umbralMinimo = 1; // Valor por defecto
+
+        // NO enviamos idEstProEnumFK → MySQL asignará 1 (Activo)
         $sql = $conexion->prepare("
-            INSERT INTO productos (nomPro, desPro, preUni, stoAct, idCatFK)
-            VALUES (?, ?, ?, ?, ?)
+            INSERT INTO productos 
+            (nomPro, desPro, preUni, preVen, FecReg, stoAct, umbMinSo, idCatFK)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         ");
 
-        $sql->bind_param("ssdii", $nombreProducto, $descripcionProducto, $precioUnitario, $stockActivo, $categoriaProducto);
+        $sql->bind_param(
+            "ssddsidi",
+            $nombreProducto,
+            $descripcionProducto,
+            $precioUnitario,
+            $precioVenta,
+            $fechaRegistro,
+            $stockActivo,
+            $umbralMinimo,
+            $categoriaProducto
+        );
 
         if ($sql->execute()) {
             echo "<script>alert('Producto creado exitosamente');</script>";
@@ -46,4 +63,5 @@ if (isset($_POST["btnCancelar"])) {
     header("Location: inicio.php");
     exit();
 }
+
 ?>

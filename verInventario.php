@@ -1,10 +1,10 @@
 <?php
+$data = include("logica/logica-verInventario.php");
 
-include("logica/logica-verInventario.php");
-if (isset($_POST["regresarbtn"])) {
-    header("Location: inicio.php");
-    exit();
-}
+$resultado = $data['resultado'];
+$categorias = $data['categorias'];
+$mensaje = $data['mensaje'];
+$tipo = $data['tipo'];
 ?>
 
 <!DOCTYPE html>
@@ -12,75 +12,104 @@ if (isset($_POST["regresarbtn"])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel de Administración</title> <style>
-        @import url('css/style-verInventario.css');
-    </style>
-    </head>
+    <title>Inventario</title>
+    <link rel="stylesheet" href="css/style-verInventario.css">
+</head>
 
 <body>
-    <?php include './components/sidebar.php'; ?>
 
- <main class="content-area">
- <header class="topbar">
-        <h1>Inventario</h1>
-        <a href="inicio.php" class ="regresarbtn">Regresar</a>
-    </header>
+<?php include './components/sidebar.php'; ?>
 
-    <div class="admin-box">
+<main class="content-area">
 
-<table border="1" cellpadding="40" cellspacing="20" style="border-collapse: collapse; width: 100%;">
-    <tr style="background-color: #66B2A0; color: white; text-align: left;">
-        <th>Numero Registro</th>
+<header class="topbar">
+    <h1>Inventario</h1>
+    <a href="inicio.php" class="regresarbtn">Regresar</a>
+</header>
+
+<div class="admin-box">
+
+<?php if (!empty($mensaje)): ?>
+    <div class="resultado-server <?php echo $tipo; ?>">
+        <?= $mensaje ?>
+    </div>
+<?php endif; ?>
+
+<!-- FILTROS -->
+<form method="GET" class="filtros">
+
+    <input type="text" name="buscar" placeholder="Buscar por ID o Nombre">
+
+    <select name="categoria">
+        <option value="0">Categoría</option>
+        <?php while ($cat = $categorias->fetch_assoc()): ?>
+            <option value="<?= $cat['idCat'] ?>"><?= $cat['nomCat'] ?></option>
+        <?php endwhile; ?>
+    </select>
+
+    <select name="estado">
+        <option value="0">Estado</option>
+        <option value="1">Activo</option>
+        <option value="2">Inactivo</option>
+    </select>
+
+    <button type="submit">Filtrar</button>
+
+</form>
+
+<table>
+    <tr>
+        <th>ID</th>
         <th>Producto</th>
         <th>Descripción</th>
         <th>Precio</th>
         <th>Stock</th>
         <th>Categoría</th>
+        <th>Estado</th>
+        <th>Acción</th>
     </tr>
 
-    <?php while ($fila = $sql->fetch_assoc()) { ?>
+    <?php while ($fila = $resultado->fetch_assoc()): ?>
+
         <tr>
-            <td><?php echo $fila['idPro']; ?></td>
-            <td><?php echo $fila['nomPro']; ?></td>
-            <td><?php echo $fila['desPro']; ?></td>
-            <td>$<?php echo number_format($fila['preUni'], 2); ?></td>
-            <td><?php echo $fila['stoAct']; ?></td>
-            <td><?php echo $fila['nomCat']; ?></td>
+            <td><?= $fila['idPro'] ?></td>
+            <td><?= $fila['nomPro'] ?></td>
+            <td><?= $fila['desPro'] ?></td>
+            <td>$<?= number_format($fila['preUni'], 2) ?></td>
+            <td><?= $fila['stoAct'] ?></td>
+            <td><?= $fila['nomCat'] ?></td>
+
+            <td>
+                <?= $fila['estado_nombre'] ?>
+            </td>
+
+            <td>
+                <form method="POST" action="verInventario.php">
+                    <input type="hidden" name="id_producto" value="<?= $fila['idPro'] ?>">
+
+                    <?php if ($fila['estado_id'] == 1): ?>
+                        <input type="hidden" name="nuevo_estado" value="2">
+                        <button type="submit" name="cambiar_estado" class="btn-inactivar">
+                            Inactivar
+                        </button>
+                    <?php else: ?>
+                        <input type="hidden" name="nuevo_estado" value="1">
+                        <button type="submit" name="cambiar_estado" class="btn-activar">
+                            Activar
+                        </button>
+                    <?php endif; ?>
+
+                </form>
+            </td>
+
         </tr>
-    <?php } ?>
+
+    <?php endwhile; ?>
+
 </table>
 
+</div>
+</main>
 
-<div class="pagination">
-
-    <!-- Botón ANTERIOR -->
-    <?php if ($pagina > 1): ?>
-        <a href="?pag=<?php echo $pagina - 1; ?>">&#10094;</a>
-    <?php else: ?>
-        <span class="disabled">&#10094;</span>
-    <?php endif; ?>
-
-
-    <!-- Números -->
-    <?php for ($i = 1; $i <= $totalPaginas; $i++): ?>
-
-        <?php if ($i == $pagina): ?>
-            <span class="active"><?php echo $i; ?></span>
-        <?php else: ?>
-            <a href="?pag=<?php echo $i; ?>"><?php echo $i; ?></a>
-        <?php endif; ?>
-
-    <?php endfor; ?>
-
-
-    <!-- Botón SIGUIENTE -->
-    <?php if ($pagina < $totalPaginas): ?>
-        <a href="?pag=<?php echo $pagina + 1; ?>">&#10095;</a>
-    <?php else: ?>
-        <span class="disabled">&#10095;</span>
-    <?php endif; ?>
-
-</div>          
-    </div>
 </body>
 </html>
