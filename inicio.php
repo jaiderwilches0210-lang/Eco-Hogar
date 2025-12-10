@@ -35,7 +35,7 @@ include("logica/logicaInicio.php");
                     <div class="color"><img src="imagenes/imagen7.jpeg" alt="Imagen Decorativa 5"></div>
                     <div class="color"><img src="imagenes/imagen8.jpeg" alt="Imagen Decorativa 6"></div>
                     <div class="color"><img src="imagenes/imagen9.jpeg" alt="Imagen Decorativa 5"></div>
-                    <div class="color"><img src="imagenes/imagen10.jpeg" alt="Imagen Decorativa 6"></div>  
+                    <div class="color"><img src="imagenes/imagen10.webp" alt="Imagen Decorativa 6"></div>  
             </div>
         </main>
         
