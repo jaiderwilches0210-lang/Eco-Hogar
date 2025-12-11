@@ -39,5 +39,6 @@ include("logica/logicaInicio.php");
             </div>
         </main>
         
-    </div> </body>
+    </div> 
+</body>
 </html>

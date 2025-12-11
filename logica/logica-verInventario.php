@@ -1,11 +1,10 @@
 <?php
-// Ruta correcta hacia la conexión
 include_once __DIR__ . '/../conexion/conexion.php';
 
 $mensaje = "";
 $tipo = "";
 
-// Cambiar estado del producto
+// -------------------- CAMBIAR ESTADO --------------------
 if (isset($_POST['cambiar_estado']) && !empty($_POST['id_producto'])) {
     $id = intval($_POST['id_producto']);
     $nuevo_estado = intval($_POST['nuevo_estado']);
@@ -22,7 +21,15 @@ if (isset($_POST['cambiar_estado']) && !empty($_POST['id_producto'])) {
     }
 }
 
-// FILTROS
+// -------------------- PAGINACIÓN --------------------
+$registrosPorPagina = 10;
+
+$paginaActual = isset($_GET['pagina']) ? intval($_GET['pagina']) : 1;
+$paginaActual = max(1, $paginaActual);
+
+$offset = ($paginaActual - 1) * $registrosPorPagina;
+
+// -------------------- FILTROS --------------------
 $where = "WHERE 1=1";
 
 if (!empty($_GET['buscar'])) {
@@ -40,7 +47,7 @@ if (!empty($_GET['estado']) && $_GET['estado'] != "0") {
     $where .= " AND p.idEstProEnumFK = $estado";
 }
 
-// CONSULTA PRINCIPAL
+// -------------------- CONSULTA CON LIMIT --------------------
 $sql = "
 SELECT p.idPro, p.nomPro, p.desPro, p.preUni, p.stoAct,
        c.nomCat,
@@ -51,20 +58,32 @@ INNER JOIN categoria_producto c ON p.idCatFK = c.idCat
 INNER JOIN estado_producto ep ON p.idEstProEnumFK = ep.idEst
 $where
 ORDER BY p.idPro ASC
+LIMIT $registrosPorPagina OFFSET $offset
 ";
 
 $resultado = $conexion->query($sql);
-
 if (!$resultado) {
     die("Error SQL: " . $conexion->error);
 }
 
-// Obtener categorías
+// -------------------- OBTENER TOTAL DE REGISTROS --------------------
+$sqlTotal = "
+SELECT COUNT(*) AS total
+FROM productos p
+$where
+";
+$totalReg = $conexion->query($sqlTotal)->fetch_assoc()['total'];
+$totalPaginas = ceil($totalReg / $registrosPorPagina);
+
+// -------------------- LISTA DE CATEGORÍAS --------------------
 $categorias = $conexion->query("SELECT * FROM categoria_producto");
 
+// -------------------- RETORNO --------------------
 return [
-    "resultado" => $resultado,
-    "categorias" => $categorias,
-    "mensaje" => $mensaje,
-    "tipo" => $tipo
+    "resultado"      => $resultado,
+    "categorias"     => $categorias,
+    "mensaje"        => $mensaje,
+    "tipo"           => $tipo,
+    "paginaActual"   => $paginaActual,
+    "totalPaginas"   => $totalPaginas
 ];

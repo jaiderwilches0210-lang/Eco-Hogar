@@ -25,7 +25,11 @@ SET time_zone = "+00:00";
 
 --
 -- Estructura de tabla para la tabla `categoria_producto`
+
 --
+
+CREATE DATABASE eco_hogar;
+USE eco_hogar;
 
 CREATE TABLE `categoria_producto` (
   `idCat` int(11) NOT NULL,
